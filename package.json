@@ -1,0 +1,22 @@
+{
+  "name": "app-icon-badge",
+  "version": "0.0.1",
+  "description": "Generate version and env badges for app icon",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/obytes/app-icon-badge.git"
+  },
+  "author": "Siham Ben Daia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/obytes/app-icon-badge/issues"
+  },
+  "homepage": "https://github.com/obytes/app-icon-badge#readme",
+  "dependencies": {
+    "jimp": "^0.22.7"
+  }
+}

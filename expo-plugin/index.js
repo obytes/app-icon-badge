@@ -1,4 +1,4 @@
-const addAppBanners = require('../index');
+const addIconBadge = require('../index');
 module.exports = function (config,{ appEnvironment, appIconPath, badgeOverlayPath}) {
 
   addAppBanners({

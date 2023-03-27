@@ -1,11 +1,10 @@
 const addIconBadge = require('../index');
-module.exports = function (config,{ appEnvironment, appIconPath, badgeOverlayPath}) {
+module.exports = function (config,{ environment, iconPath}) {
 
-  addAppBanners({
-    appIconPath: appIconPath,
-    badgeOverlayPath: badgeOverlayPath,
-    appEnvironment: appEnvironment,
-    appVersion: config.version,
+  addIconBadge({
+    iconPath: iconPath,
+    environment: environment,
+    version: config.version,
   });
 
   return config;

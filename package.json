@@ -18,5 +18,8 @@
   "homepage": "https://github.com/obytes/app-icon-badge#readme",
   "dependencies": {
     "jimp": "^0.22.7"
+  },
+  "devDependencies": {
+    "prettier": "2.8.7"
   }
 }

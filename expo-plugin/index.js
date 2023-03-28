@@ -1,6 +1,5 @@
-const addIconBadge = require('../index');
-module.exports = function (config,{ environment, iconPath}) {
-
+const addIconBadge = require("../index");
+module.exports = function (config, { environment, iconPath }) {
   addIconBadge({
     iconPath: iconPath,
     environment: environment,

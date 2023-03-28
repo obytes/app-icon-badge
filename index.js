@@ -1,5 +1,4 @@
-const Jimp = require('jimp');
-
+const Jimp = require("jimp");
 
 /**
  * @param {string} iconPath  // path to the app icon
@@ -16,14 +15,13 @@ const Jimp = require('jimp');
  * });
  */
 
-function getResultPath ({iconPath, environment}) {
-  const iconPathArray = iconPath.split('.');
-  const suffix= typeof environment === 'string' ? environment : 'result';
+function getResultPath({ iconPath, environment }) {
+  const iconPathArray = iconPath.split(".");
+  const suffix = typeof environment === "string" ? environment : "result";
   iconPathArray.splice(iconPathArray.length - 1, 0, suffix);
-  const resultFilename = iconPathArray.join('.');
+  const resultFilename = iconPathArray.join(".");
   return resultFilename;
 }
-
 
 /**
  * @param {string} appIcon  // path to the app icon
@@ -43,33 +41,35 @@ function getResultPath ({iconPath, environment}) {
  * });
  */
 
-async function getVersionBadge ({iconPath, version}) {
+async function getVersionBadge({ iconPath, version }) {
   const bannerHeight = 180;
-  const bgColor = 'transparent';
-  const versionBadgePath='./assets/version-badge.png';
+  const bgColor = "transparent";
+  const versionBadgePath = "./assets/version-badge.png";
   const font = await Jimp.loadFont(Jimp.FONT_SANS_128_WHITE);
   const appIcon = await Jimp.read(iconPath);
   const versionBadgeOverlay = await Jimp.read(versionBadgePath);
 
   const versionBadge = new Jimp(appIcon.bitmap.width, bannerHeight, bgColor);
   await versionBadge.print(
-        font,
-        0,
-        0,
-        {
-          text: version,
-          alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
-          alignmentY: Jimp.VERTICAL_ALIGN_MIDDLE,
-        },
-        appIcon.bitmap.width,
-        bannerHeight
-      );
+    font,
+    0,
+    0,
+    {
+      text: version,
+      alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
+      alignmentY: Jimp.VERTICAL_ALIGN_MIDDLE,
+    },
+    appIcon.bitmap.width,
+    bannerHeight
+  );
   versionBadge.rotate(-45);
   const translateX = 270;
 
-  const versionResultImage = versionBadgeOverlay.composite(versionBadge,
-            appIcon.bitmap.width - versionBadge.bitmap.width + translateX,
-            -translateX);
+  const versionResultImage = versionBadgeOverlay.composite(
+    versionBadge,
+    appIcon.bitmap.width - versionBadge.bitmap.width + translateX,
+    -translateX
+  );
   return versionResultImage;
 }
 
@@ -90,31 +90,35 @@ async function getVersionBadge ({iconPath, version}) {
  * environment: 'development',
  * });
  */
-async function getEnvBadge ({iconPath, environment}) {
+async function getEnvBadge({ iconPath, environment }) {
   const bannerHeight = 180;
-  const bgColor = 'transparent';
+  const bgColor = "transparent";
   const font = await Jimp.loadFont(Jimp.FONT_SANS_128_WHITE);
-  const envBadgePath='./assets/env-badge.png';
+  const envBadgePath = "./assets/env-badge.png";
   const appIcon = await Jimp.read(iconPath);
   const envBadgeOverlay = await Jimp.read(envBadgePath);
   const environmentBadge = new Jimp(
-        appIcon.bitmap.width,
-        bannerHeight,
-        bgColor
-      );
+    appIcon.bitmap.width,
+    bannerHeight,
+    bgColor
+  );
   await environmentBadge.print(
-        font,
-        0,
-        0,
-        {
-          text: environment.toUpperCase(),
-          alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
-          alignmentY: Jimp.VERTICAL_ALIGN_MIDDLE,
-        },
-        appIcon.bitmap.width,
-        bannerHeight
-      );
-  const envResultImage = envBadgeOverlay.composite(environmentBadge, 0, appIcon.bitmap.height - bannerHeight + 2)
+    font,
+    0,
+    0,
+    {
+      text: environment.toUpperCase(),
+      alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
+      alignmentY: Jimp.VERTICAL_ALIGN_MIDDLE,
+    },
+    appIcon.bitmap.width,
+    bannerHeight
+  );
+  const envResultImage = envBadgeOverlay.composite(
+    environmentBadge,
+    0,
+    appIcon.bitmap.height - bannerHeight + 2
+  );
   return envResultImage;
 }
 
@@ -143,34 +147,32 @@ async function getEnvBadge ({iconPath, environment}) {
  * });
  */
 
- async function addIconBadge({
-  iconPath,
-  environment,
-  version,
-}) {
-
-  let resultImage= await Jimp.read(iconPath);;
+async function addIconBadge({ iconPath, environment, version }) {
+  let resultImage = await Jimp.read(iconPath);
 
   //Create the environment banner image
-  if (typeof environment === 'string') {
-    const environmentBadge = await getEnvBadge({iconPath, environment});
-      resultImage = await resultImage.composite(environmentBadge, 0, 0);
+  if (typeof environment === "string") {
+    const environmentBadge = await getEnvBadge({ iconPath, environment });
+    resultImage = await resultImage.composite(environmentBadge, 0, 0);
   }
 
   // Create the version badge image and rotate it
-  if (typeof version === 'string') {
-      const versionBadge = await getVersionBadge({iconPath, version});
-      resultImage = await resultImage.composite(versionBadge, 0, 0);
+  if (typeof version === "string") {
+    const versionBadge = await getVersionBadge({ iconPath, version });
+    resultImage = await resultImage.composite(versionBadge, 0, 0);
   }
 
   // Save the result image to a file with app environment name as suffix
-  const resultFilename = getResultPath({iconPath: iconPath, environment: environment});
+  const resultFilename = getResultPath({
+    iconPath: iconPath,
+    environment: environment,
+  });
   await resultImage.writeAsync(resultFilename);
-};
+}
 
 addIconBadge({
-  iconPath: './assets/icon.png',
-  version: '3.0.0',
-})
+  iconPath: "./assets/icon.png",
+  version: "3.0.0",
+});
 
 module.exports = addIconBadge;

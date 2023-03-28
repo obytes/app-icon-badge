@@ -149,32 +149,28 @@ async function getEnvBadge ({iconPath, environment}) {
   version,
 }) {
 
-  const appIcon = await Jimp.read(iconPath);
-  let resultImage= undefined;
+  let resultImage= await Jimp.read(iconPath);;
 
   //Create the environment banner image
   if (typeof environment === 'string') {
     const environmentBadge = await getEnvBadge({iconPath, environment});
-      resultImage = await appIcon.composite(environmentBadge, 0, 0);
+      resultImage = await resultImage.composite(environmentBadge, 0, 0);
   }
 
   // Create the version badge image and rotate it
   if (typeof version === 'string') {
       const versionBadge = await getVersionBadge({iconPath, version});
-      if(typeof resultImage === 'undefined')
-        {
-          versionResultImage = await appIcon
-          .composite(versionBadge, 0, 0)
-        }
-      else 
-      { versionResultImage = await resultImage.composite(versionBadge, 0, 0);}
+      resultImage = await resultImage.composite(versionBadge, 0, 0);
   }
 
   // Save the result image to a file with app environment name as suffix
   const resultFilename = getResultPath({iconPath: iconPath, environment: environment});
-  resultImage = typeof resultImage === 'undefined' ? appIcon : resultImage;
   await resultImage.writeAsync(resultFilename);
 };
 
+addIconBadge({
+  iconPath: './assets/icon.png',
+  version: '3.0.0',
+})
 
 module.exports = addIconBadge;

@@ -153,13 +153,13 @@ async function addIconBadge({ iconPath, environment, version }) {
   //Create the environment banner image
   if (typeof environment === "string") {
     const environmentBadge = await getEnvBadge({ iconPath, environment });
-    resultImage = await resultImage.composite(environmentBadge, 0, 0);
+    resultImage.composite(environmentBadge, 0, 0);
   }
 
   // Create the version badge image and rotate it
   if (typeof version === "string") {
     const versionBadge = await getVersionBadge({ iconPath, version });
-    resultImage = await resultImage.composite(versionBadge, 0, 0);
+    resultImage.composite(versionBadge, 0, 0);
   }
 
   // Save the result image to a file with app environment name as suffix
@@ -167,12 +167,7 @@ async function addIconBadge({ iconPath, environment, version }) {
     iconPath: iconPath,
     environment: environment,
   });
-  await resultImage.writeAsync(resultFilename);
+  resultImage.writeAsync(resultFilename);
 }
-
-addIconBadge({
-  iconPath: "./assets/icon.png",
-  version: "3.0.0",
-});
 
 module.exports = addIconBadge;

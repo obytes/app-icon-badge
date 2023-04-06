@@ -16,7 +16,7 @@
     "start": "ts-node example.ts",
     "type-check": "tsc --noEmit",
     "preinstall": "npx only-allow pnpm",
-    "np": "np"
+    "np": "pnpm build && np"
   },
   "repository": {
     "type": "git",

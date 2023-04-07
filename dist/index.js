@@ -46,7 +46,8 @@ var __async = (__this, __arguments, generator) => {
 // index.ts
 var app_icon_badge_exports = {};
 __export(app_icon_badge_exports, {
-  addIconBadge: () => addIconBadge
+  addIconBadge: () => addIconBadge,
+  withIconBadge: () => withIconBadge
 });
 module.exports = __toCommonJS(app_icon_badge_exports);
 var import_jimp3 = __toESM(require("jimp"));
@@ -63,7 +64,7 @@ function getEnvBadge(_0) {
     const bannerHeight = 180;
     const bgColor = "transparent";
     const font = yield import_jimp.default.loadFont(import_jimp.default.FONT_SANS_128_WHITE);
-    const envBadgePath = import_path.default.basename(__dirname) === "dist" ? import_path.default.resolve(__dirname, "../assets/env-badge.png") : import_path.default.resolve(__dirname, "assets/env-badge.png");
+    const envBadgePath = import_path.default.resolve(__dirname, "assets/env-badge.png");
     const envBadgeOverlay = yield import_jimp.default.read(envBadgePath);
     const width = envBadgeOverlay.bitmap.width;
     const height = envBadgeOverlay.bitmap.height;
@@ -100,7 +101,7 @@ function getVersionBadge(_0) {
       return null;
     const bannerHeight = 180;
     const bgColor = "transparent";
-    const versionBadgePath = import_path2.default.basename(__dirname) === "dist" ? import_path2.default.resolve(__dirname, "../assets/version-badge.png") : import_path2.default.resolve(__dirname, "assets/version-badge.png");
+    const versionBadgePath = import_path2.default.resolve(__dirname, "assets/version-badge.png");
     const font = yield import_jimp2.default.loadFont(import_jimp2.default.FONT_SANS_128_WHITE);
     const versionBadgeOverlay = yield import_jimp2.default.read(versionBadgePath);
     const width = versionBadgeOverlay.bitmap.width;
@@ -136,6 +137,16 @@ function getResultPath({ iconPath, environment = "result" }) {
   return resultFilename;
 }
 
+// expo-plugin.ts
+function withIconBadge(config, { environment, iconPath }) {
+  addIconBadge({
+    iconPath,
+    environment,
+    version: config.version
+  });
+  return config;
+}
+
 // index.ts
 function addIconBadge(_0) {
   return __async(this, arguments, function* ({ iconPath, environment, version }) {
@@ -157,5 +168,6 @@ function addIconBadge(_0) {
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  addIconBadge
+  addIconBadge,
+  withIconBadge
 });

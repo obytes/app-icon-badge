@@ -1,5 +1,5 @@
 import { addIconBadge } from './index';
-export function withIconBadge (config : any, { environment, iconPath } : any) {
+export function withIconBadge(config: any, { environment, iconPath }: any) {
   addIconBadge({
     iconPath: iconPath,
     environment: environment,
@@ -7,5 +7,5 @@ export function withIconBadge (config : any, { environment, iconPath } : any) {
   });
 
   return config;
-};
+}
 // TODO: Add TYPING for the config object

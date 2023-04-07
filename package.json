@@ -11,9 +11,9 @@
     "assets"
   ],
   "scripts": {
-    "build": "tsup index.ts --format cjs,esm --dts && tsup expo-plugin.ts --format cjs,esm --dts",
+    "build": "tsup index.ts --format cjs,esm --dts && cp -r assets dist",
     "release": "pnpm run build && changeset publish",
-    "start": "ts-node example.ts",
+    "start": "ts-node example/index.ts",
     "type-check": "tsc --noEmit",
     "preinstall": "npx only-allow pnpm",
     "np": "pnpm build && np --no-cleanup ",

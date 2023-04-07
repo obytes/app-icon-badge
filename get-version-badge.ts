@@ -27,10 +27,7 @@ export async function getVersionBadge({
   const bannerHeight = 180;
   const bgColor = 'transparent';
 
-  const versionBadgePath =
-    path.basename(__dirname) === 'dist'
-      ? path.resolve(__dirname, '../assets/version-badge.png')
-      : path.resolve(__dirname, 'assets/version-badge.png');
+  const versionBadgePath = path.resolve(__dirname, 'assets/version-badge.png');
   const font = await Jimp.loadFont(Jimp.FONT_SANS_128_WHITE);
   const versionBadgeOverlay = await Jimp.read(versionBadgePath);
   const width = versionBadgeOverlay.bitmap.width;

@@ -34,7 +34,7 @@ function getEnvBadge(_0) {
     const bannerHeight = 180;
     const bgColor = "transparent";
     const font = yield Jimp.loadFont(Jimp.FONT_SANS_128_WHITE);
-    const envBadgePath = path.basename(__dirname) === "dist" ? path.resolve(__dirname, "../assets/env-badge.png") : path.resolve(__dirname, "assets/env-badge.png");
+    const envBadgePath = path.resolve(__dirname, "assets/env-badge.png");
     const envBadgeOverlay = yield Jimp.read(envBadgePath);
     const width = envBadgeOverlay.bitmap.width;
     const height = envBadgeOverlay.bitmap.height;
@@ -71,7 +71,7 @@ function getVersionBadge(_0) {
       return null;
     const bannerHeight = 180;
     const bgColor = "transparent";
-    const versionBadgePath = path2.basename(__dirname) === "dist" ? path2.resolve(__dirname, "../assets/version-badge.png") : path2.resolve(__dirname, "assets/version-badge.png");
+    const versionBadgePath = path2.resolve(__dirname, "assets/version-badge.png");
     const font = yield Jimp2.loadFont(Jimp2.FONT_SANS_128_WHITE);
     const versionBadgeOverlay = yield Jimp2.read(versionBadgePath);
     const width = versionBadgeOverlay.bitmap.width;
@@ -107,6 +107,16 @@ function getResultPath({ iconPath, environment = "result" }) {
   return resultFilename;
 }
 
+// expo-plugin.ts
+function withIconBadge(config, { environment, iconPath }) {
+  addIconBadge({
+    iconPath,
+    environment,
+    version: config.version
+  });
+  return config;
+}
+
 // index.ts
 function addIconBadge(_0) {
   return __async(this, arguments, function* ({ iconPath, environment, version }) {
@@ -127,5 +137,6 @@ function addIconBadge(_0) {
   });
 }
 export {
-  addIconBadge
+  addIconBadge,
+  withIconBadge
 };

@@ -1,3 +1,5 @@
+declare function withIconBadge(config: any, { environment, iconPath }: any): any;
+
 /**
  * @param {string} iconPath  // path to the app icon
  * @param {string} environment // the app environment staging | development | production
@@ -33,4 +35,4 @@ type Params = {
 };
 declare function addIconBadge({ iconPath, environment, version }: Params): Promise<void>;
 
-export { addIconBadge };
+export { addIconBadge, withIconBadge };

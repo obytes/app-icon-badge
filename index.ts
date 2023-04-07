@@ -35,7 +35,7 @@ type Params = {
   options?: {
     badgePath?: string;
     envBadgePath?: string;
-  }
+  };
 };
 export async function addIconBadge({ iconPath, environment, version }: Params) {
   let resultImage = await Jimp.read(iconPath);
@@ -61,3 +61,5 @@ export async function addIconBadge({ iconPath, environment, version }: Params) {
   });
   resultImage.writeAsync(resultFilename);
 }
+
+export * from './expo-plugin';

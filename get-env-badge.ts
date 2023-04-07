@@ -29,10 +29,7 @@ export async function getEnvBadge({
   const bgColor = 'transparent';
   const font = await Jimp.loadFont(Jimp.FONT_SANS_128_WHITE);
 
-  const envBadgePath =
-    path.basename(__dirname) === 'dist'
-      ? path.resolve(__dirname, '../assets/env-badge.png')
-      : path.resolve(__dirname, 'assets/env-badge.png');
+  const envBadgePath = path.resolve(__dirname, 'assets/env-badge.png');
   const envBadgeOverlay = await Jimp.read(envBadgePath);
   const width = envBadgeOverlay.bitmap.width;
   const height = envBadgeOverlay.bitmap.height;

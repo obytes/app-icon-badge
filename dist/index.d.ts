@@ -26,6 +26,10 @@ type Params = {
     iconPath: string;
     environment?: string;
     version?: string;
+    options?: {
+        badgePath?: string;
+        envBadgePath?: string;
+    };
 };
 declare function addIconBadge({ iconPath, environment, version }: Params): Promise<void>;
 

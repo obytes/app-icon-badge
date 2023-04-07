@@ -24,6 +24,7 @@ import Jimp3 from "jimp";
 
 // get-env-badge.ts
 import Jimp from "jimp";
+import path from "path";
 function getEnvBadge(_0) {
   return __async(this, arguments, function* ({
     environment
@@ -33,7 +34,7 @@ function getEnvBadge(_0) {
     const bannerHeight = 180;
     const bgColor = "transparent";
     const font = yield Jimp.loadFont(Jimp.FONT_SANS_128_WHITE);
-    const envBadgePath = "./assets/env-badge.png";
+    const envBadgePath = path.basename(__dirname) === "dist" ? path.resolve(__dirname, "../assets/env-badge.png") : path.resolve(__dirname, "assets/env-badge.png");
     const envBadgeOverlay = yield Jimp.read(envBadgePath);
     const width = envBadgeOverlay.bitmap.width;
     const height = envBadgeOverlay.bitmap.height;
@@ -61,6 +62,7 @@ function getEnvBadge(_0) {
 
 // get-version-badge.ts
 import Jimp2 from "jimp";
+import path2 from "path";
 function getVersionBadge(_0) {
   return __async(this, arguments, function* ({
     version
@@ -69,7 +71,7 @@ function getVersionBadge(_0) {
       return null;
     const bannerHeight = 180;
     const bgColor = "transparent";
-    const versionBadgePath = "./assets/version-badge.png";
+    const versionBadgePath = path2.basename(__dirname) === "dist" ? path2.resolve(__dirname, "../assets/version-badge.png") : path2.resolve(__dirname, "assets/version-badge.png");
     const font = yield Jimp2.loadFont(Jimp2.FONT_SANS_128_WHITE);
     const versionBadgeOverlay = yield Jimp2.read(versionBadgePath);
     const width = versionBadgeOverlay.bitmap.width;

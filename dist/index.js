@@ -18,10 +18,6 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
@@ -57,6 +53,7 @@ var import_jimp3 = __toESM(require("jimp"));
 
 // get-env-badge.ts
 var import_jimp = __toESM(require("jimp"));
+var import_path = __toESM(require("path"));
 function getEnvBadge(_0) {
   return __async(this, arguments, function* ({
     environment
@@ -66,7 +63,7 @@ function getEnvBadge(_0) {
     const bannerHeight = 180;
     const bgColor = "transparent";
     const font = yield import_jimp.default.loadFont(import_jimp.default.FONT_SANS_128_WHITE);
-    const envBadgePath = "./assets/env-badge.png";
+    const envBadgePath = import_path.default.basename(__dirname) === "dist" ? import_path.default.resolve(__dirname, "../assets/env-badge.png") : import_path.default.resolve(__dirname, "assets/env-badge.png");
     const envBadgeOverlay = yield import_jimp.default.read(envBadgePath);
     const width = envBadgeOverlay.bitmap.width;
     const height = envBadgeOverlay.bitmap.height;
@@ -94,6 +91,7 @@ function getEnvBadge(_0) {
 
 // get-version-badge.ts
 var import_jimp2 = __toESM(require("jimp"));
+var import_path2 = __toESM(require("path"));
 function getVersionBadge(_0) {
   return __async(this, arguments, function* ({
     version
@@ -102,7 +100,7 @@ function getVersionBadge(_0) {
       return null;
     const bannerHeight = 180;
     const bgColor = "transparent";
-    const versionBadgePath = "./assets/version-badge.png";
+    const versionBadgePath = import_path2.default.basename(__dirname) === "dist" ? import_path2.default.resolve(__dirname, "../assets/version-badge.png") : import_path2.default.resolve(__dirname, "assets/version-badge.png");
     const font = yield import_jimp2.default.loadFont(import_jimp2.default.FONT_SANS_128_WHITE);
     const versionBadgeOverlay = yield import_jimp2.default.read(versionBadgePath);
     const width = versionBadgeOverlay.bitmap.width;

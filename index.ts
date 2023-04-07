@@ -32,10 +32,6 @@ type Params = {
   iconPath: string;
   environment?: string;
   version?: string;
-  options?: {
-    badgePath?: string;
-    envBadgePath?: string;
-  };
 };
 export async function addIconBadge({ iconPath, environment, version }: Params) {
   let resultImage = await Jimp.read(iconPath);

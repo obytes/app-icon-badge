@@ -1,5 +1,10 @@
 import { addIconBadge } from './index';
-export function withIconBadge(config: any, { environment, iconPath }: any) {
+
+type Params = {
+  iconPath: string;
+  environment?: string;
+};
+export function withIconBadge(config: any, { environment, iconPath }: Params) {
   addIconBadge({
     iconPath: iconPath,
     environment: environment,

@@ -18,7 +18,7 @@
     "preinstall": "npx only-allow pnpm",
     "np": "pnpm build && np --no-cleanup ",
     "test": "echo \"no test specified\"",
-    "postinstall": "husky install"
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",

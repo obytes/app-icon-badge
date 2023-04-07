@@ -11,13 +11,14 @@
     "assets"
   ],
   "scripts": {
-    "build": "tsup index.ts --format cjs,esm --dts && tsup expo-plugin.ts --format cjs,esm --dts",
+    "build": "tsup index.ts --format cjs,esm --dts && cp -r assets dist",
     "release": "pnpm run build && changeset publish",
-    "start": "ts-node example.ts",
+    "start": "ts-node example/index.ts",
     "type-check": "tsc --noEmit",
     "preinstall": "npx only-allow pnpm",
     "np": "pnpm build && np --no-cleanup ",
-    "test": "echo \"no test specified\""
+    "test": "echo \"no test specified\"",
+    "postinstall": "husky install"
   },
   "repository": {
     "type": "git",
@@ -33,10 +34,14 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.0",
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
+    "@types/node": "^18.15.11",
+    "husky": "^8.0.3",
+    "np": "^7.7.0",
     "prettier": "2.8.7",
     "ts-node": "^10.9.1",
     "tsup": "^6.5.0",
-    "typescript": "^4.9.4",
-    "np": "^7.7.0"
+    "typescript": "^4.9.4"
   }
 }

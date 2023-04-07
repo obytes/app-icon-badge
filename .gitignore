@@ -1,2 +1,4 @@
 node_modules/
 assets/*.*.png
+example/*.*.png
+dist

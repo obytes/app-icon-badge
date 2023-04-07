@@ -27,10 +27,15 @@ import { getResultPath } from './get-result-path';
  * version: '3.0.0',
  * });
  */
+
 type Params = {
   iconPath: string;
   environment?: string;
   version?: string;
+  options?: {
+    badgePath?: string;
+    envBadgePath?: string;
+  }
 };
 export async function addIconBadge({ iconPath, environment, version }: Params) {
   let resultImage = await Jimp.read(iconPath);

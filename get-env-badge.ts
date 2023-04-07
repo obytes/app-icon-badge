@@ -1,4 +1,5 @@
 import Jimp from 'jimp';
+import path from 'path';
 
 /**
  * @param {string} appIcon  // path to the app icon
@@ -27,7 +28,11 @@ export async function getEnvBadge({
   const bannerHeight = 180;
   const bgColor = 'transparent';
   const font = await Jimp.loadFont(Jimp.FONT_SANS_128_WHITE);
-  const envBadgePath = './assets/env-badge.png';
+
+  const envBadgePath =
+    path.basename(__dirname) === 'dist'
+      ? path.resolve(__dirname, '../assets/env-badge.png')
+      : path.resolve(__dirname, 'assets/env-badge.png');
   const envBadgeOverlay = await Jimp.read(envBadgePath);
   const width = envBadgeOverlay.bitmap.width;
   const height = envBadgeOverlay.bitmap.height;

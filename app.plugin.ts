@@ -5,7 +5,7 @@ type Params = {
   environment?: string;
   enabled?: boolean;
 };
-export function withIconBadge(
+function withIconBadge(
   config: any,
   { environment, iconPath, enabled = true }: Params
 ) {
@@ -18,4 +18,5 @@ export function withIconBadge(
 
   return config;
 }
+module.exports = withIconBadge;
 // TODO: Add TYPING for the config object

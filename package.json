@@ -8,10 +8,11 @@
   "files": [
     "dist",
     "README.md",
-    "assets"
+    "assets",
+    "app.plugin.js"
   ],
   "scripts": {
-    "build": "tsup index.ts --format cjs,esm --dts && cp -r assets dist",
+    "build": "tsup index.ts --format cjs,esm --dts && cp -r assets dist && tsup app.plugin.ts --format cjs,esm --dts && cp -r  dist/app.plugin.js .",
     "release": "pnpm run build && changeset publish",
     "start": "ts-node example/index.ts",
     "type-check": "tsc --noEmit",

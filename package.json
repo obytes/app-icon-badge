@@ -16,7 +16,7 @@
     "start": "ts-node example/index.ts",
     "type-check": "tsc --noEmit",
     "preinstall": "npx only-allow pnpm",
-    "np": "pnpm build && np --no-cleanup ",
+    "np": "pnpm build && np --no-cleanup --no-release-draft",
     "test": "echo \"no test specified\"",
     "prepare": "husky install"
   },

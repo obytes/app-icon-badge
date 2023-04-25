@@ -8,13 +8,15 @@
   "files": [
     "dist",
     "README.md",
-    "assets"
+    "assets",
+    "app.plugin.js"
   ],
   "scripts": {
-    "build": "tsup index.ts --format cjs,esm --dts && cp -r assets dist",
+    "build": "tsup index.ts --format cjs,esm --dts && cp -r assets dist && tsup app.plugin.ts --format cjs,esm  && cp -r  dist/app.plugin.js .",
     "release": "pnpm run build && changeset publish",
     "start": "ts-node example/index.ts",
     "type-check": "tsc --noEmit",
+    "format": "prettier --write \"**/*.{ts,md,json}\" --ignore-path .gitignore",
     "preinstall": "npx only-allow pnpm",
     "np": "pnpm build && np --no-cleanup ",
     "test": "echo \"no test specified\"",
@@ -33,7 +35,6 @@
     "jimp": "^0.22.7"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.26.0",
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
     "@types/node": "^18.15.11",

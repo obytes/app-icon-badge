@@ -2,3 +2,4 @@ node_modules/
 assets/*.*.png
 example/*.*.png
 dist
+app.plugin.js

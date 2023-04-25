@@ -18,7 +18,7 @@
     "type-check": "tsc --noEmit",
     "format": "prettier --write \"**/*.{ts,md,json}\" --ignore-path .gitignore",
     "preinstall": "npx only-allow pnpm",
-    "np": "pnpm build && np --no-cleanup ",
+    "np": "pnpm build && np --no-cleanup --no-release-draft",
     "test": "echo \"no test specified\"",
     "prepare": "husky install"
   },

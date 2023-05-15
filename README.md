@@ -4,13 +4,15 @@
 <h1 align="center">
 App Icon Badge
 </h1>
-Easily generate icons with environment and version badges for your Mobile application.
+<p align="center">
+✨ Easily generate icons with environment and version badges for your Mobile application. ✨
+</p>
 
 <hr/>
 
-## 🚀 Overview
+## 👀 Overview
 
-The library uses [Jimp](https://www.npmjs.com/package/jimp), an image processing library for Node with zero native dependencies, to generate app icons with environment or version badges.
+The library uses [Jimp](https://www.npmjs.com/package/jimp), an image-processing library for Node with zero native dependencies, to generate app icons with environment or version badges.
 
 This Library was built to work with expo projects, but it can also be used in any React Native project and as a standalone library to generate icons with badges.
 
@@ -24,11 +26,9 @@ However, it starts getting confusing when we install all of them on our device, 
 
 Therefore, we need a way to differentiate the applications based on the environment and version. This library generates a badge with the environment and version information and adds it to the app icon.
 
-## Installation
+## 📦 Installation
 
-Install the package using yarn or npm
-
-### yarn
+Install the package.
 
 ```bash
 ## Using yarn
@@ -39,7 +39,7 @@ npm install app-icon-badge
 pnpm add app-icon-badge
 ```
 
-## Usage
+## 🛠️ Usage
 
 ### As an Expo Plugin
 
@@ -98,7 +98,7 @@ addIconBadge({
 
 If you would like to only generate an icon with the version badge, you can skip passing the `environment` argument. The same applies to the `version` argument.
 
-## RoadMap
+## 🚧 RoadMap
 
 The library is still in its early stages. We have a lot of ideas to improve it and make it more useful. Here are some of the things we have already had the chance to implement, as well as our plans for additions in the future:
 
@@ -108,7 +108,7 @@ The library is still in its early stages. We have a lot of ideas to improve it a
 - [ ] Add support for Android Adaptive Icons
 - [ ] Add Tests
 - [ ] Add support for custom badge colors
-- [ ] Add ability to run as a CLI tool
+- [ ] Add the ability to run as a CLI tool
 
 Feel free to suggest any other features or contribute to the project yourself by helping us implement upcoming features.
 
@@ -116,7 +116,7 @@ Feel free to suggest any other features or contribute to the project yourself by
 
 We appreciate your desire to support our effort. We highly value your participation and look forward to receiving your contributions.
 
-If you decided that you would like to contribute , you can follow these steps:
+If you decided that you would like to contribute, you can follow these steps:
 
 1. Fork the repository.
 2. Create your feature branch (git checkout -b my-new-feature).
@@ -142,4 +142,4 @@ If our project has helped you in any way, please consider giving it a star ⭐�
 
 ## 📝 License
 
-MIT
+This project is MIT licensed.

@@ -1,5 +1,5 @@
 <p align="center">
-    <img alt="App Icon Badge" src="./assets/screenshot.png"   />
+    <img alt="App Icon Badge" src="./screenshot.png"   />
 </p>
 <h1 align="center">
 App Icon Badge

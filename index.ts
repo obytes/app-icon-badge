@@ -57,5 +57,3 @@ export async function addIconBadge({ iconPath, environment, version }: Params) {
   });
   resultImage.writeAsync(resultFilename);
 }
-
-export * from './expo-plugin';

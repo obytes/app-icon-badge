@@ -2,16 +2,18 @@ import { addIconBadge } from './index';
 
 type Params = {
   iconPath: string;
+  adaptiveIconPath?: string;
   environment?: string;
   enabled?: boolean;
 };
 function withIconBadge(
   config: any,
-  { environment, iconPath, enabled = true }: Params
+  { environment, iconPath, adaptiveIconPath, enabled = true }: Params
 ) {
   if(!enabled) return config;
   addIconBadge({
     iconPath: iconPath,
+    adaptiveIconPath: adaptiveIconPath,
     environment: environment,
     version: config.version,
   });

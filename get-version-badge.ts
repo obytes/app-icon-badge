@@ -18,17 +18,19 @@ import path from 'path';
  */
 type Params = {
   version?: string;
+  adaptive?: boolean;
 };
 
 export async function getVersionBadge({
   version,
+  adaptive = false,
 }: Params): Promise<Jimp | null> {
   if (!version) return null;
   const bannerHeight = 180;
   const bgColor = 'transparent';
 
-  const versionBadgePath = path.resolve(__dirname, 'assets/version-badge.png');
-  const font = await Jimp.loadFont(Jimp.FONT_SANS_128_WHITE);
+  const versionBadgePath = path.resolve(__dirname, adaptive ? 'assets/version-badge-adaptive.png' : 'assets/version-badge.png');
+  const font = await Jimp.loadFont(adaptive ? Jimp.FONT_SANS_64_WHITE : Jimp.FONT_SANS_128_WHITE);
   const versionBadgeOverlay = await Jimp.read(versionBadgePath);
   const width = versionBadgeOverlay.bitmap.width;
   const versionBadge = new Jimp(width, bannerHeight, bgColor);
@@ -45,7 +47,7 @@ export async function getVersionBadge({
     bannerHeight
   );
   versionBadge.rotate(-45);
-  const translateX = 270;
+  const translateX = adaptive ? 190 : 270;
 
   const versionResultImage = versionBadgeOverlay.composite(
     versionBadge,

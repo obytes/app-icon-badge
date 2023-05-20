@@ -20,16 +20,18 @@ import path from 'path';
  */
 type Params = {
   environment?: string;
+  adaptive?: boolean;
 };
 export async function getEnvBadge({
   environment,
+  adaptive = false,
 }: Params): Promise<Jimp | null> {
   if (!environment) return null;
-  const bannerHeight = 180;
+  const bannerHeight = adaptive ? 90 : 180;
   const bgColor = 'transparent';
-  const font = await Jimp.loadFont(Jimp.FONT_SANS_128_WHITE);
+  const font = await Jimp.loadFont(adaptive? Jimp.FONT_SANS_64_WHITE : Jimp.FONT_SANS_128_WHITE);
 
-  const envBadgePath = path.resolve(__dirname, 'assets/env-badge.png');
+  const envBadgePath = path.resolve(__dirname, adaptive ? 'assets/env-badge-adaptive.png' :  'assets/env-badge.png');
   const envBadgeOverlay = await Jimp.read(envBadgePath);
   const width = envBadgeOverlay.bitmap.width;
   const height = envBadgeOverlay.bitmap.height;

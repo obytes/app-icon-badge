@@ -38,7 +38,7 @@ var __async = (__this, __arguments, generator) => {
   });
 };
 
-// index.ts
+// get-add-icon-badge.ts
 var import_jimp3 = __toESM(require("jimp"));
 
 // get-env-badge.ts
@@ -46,14 +46,15 @@ var import_jimp = __toESM(require("jimp"));
 var import_path = __toESM(require("path"));
 function getEnvBadge(_0) {
   return __async(this, arguments, function* ({
-    environment
+    environment,
+    adaptive = false
   }) {
     if (!environment)
       return null;
-    const bannerHeight = 180;
+    const bannerHeight = adaptive ? 90 : 180;
     const bgColor = "transparent";
-    const font = yield import_jimp.default.loadFont(import_jimp.default.FONT_SANS_128_WHITE);
-    const envBadgePath = import_path.default.resolve(__dirname, "assets/env-badge.png");
+    const font = yield import_jimp.default.loadFont(adaptive ? import_jimp.default.FONT_SANS_64_WHITE : import_jimp.default.FONT_SANS_128_WHITE);
+    const envBadgePath = import_path.default.resolve(__dirname, adaptive ? "assets/env-badge-adaptive.png" : "assets/env-badge.png");
     const envBadgeOverlay = yield import_jimp.default.read(envBadgePath);
     const width = envBadgeOverlay.bitmap.width;
     const height = envBadgeOverlay.bitmap.height;
@@ -84,14 +85,15 @@ var import_jimp2 = __toESM(require("jimp"));
 var import_path2 = __toESM(require("path"));
 function getVersionBadge(_0) {
   return __async(this, arguments, function* ({
-    version
+    version,
+    adaptive = false
   }) {
     if (!version)
       return null;
     const bannerHeight = 180;
     const bgColor = "transparent";
-    const versionBadgePath = import_path2.default.resolve(__dirname, "assets/version-badge.png");
-    const font = yield import_jimp2.default.loadFont(import_jimp2.default.FONT_SANS_128_WHITE);
+    const versionBadgePath = import_path2.default.resolve(__dirname, adaptive ? "assets/version-badge-adaptive.png" : "assets/version-badge.png");
+    const font = yield import_jimp2.default.loadFont(adaptive ? import_jimp2.default.FONT_SANS_64_WHITE : import_jimp2.default.FONT_SANS_128_WHITE);
     const versionBadgeOverlay = yield import_jimp2.default.read(versionBadgePath);
     const width = versionBadgeOverlay.bitmap.width;
     const versionBadge = new import_jimp2.default(width, bannerHeight, bgColor);
@@ -108,7 +110,7 @@ function getVersionBadge(_0) {
       bannerHeight
     );
     versionBadge.rotate(-45);
-    const translateX = 270;
+    const translateX = adaptive ? 190 : 270;
     const versionResultImage = versionBadgeOverlay.composite(
       versionBadge,
       width - versionBadge.bitmap.width + translateX,
@@ -126,8 +128,8 @@ function getResultPath({ iconPath, environment = "result" }) {
   return resultFilename;
 }
 
-// index.ts
-function addIconBadge(_0) {
+// get-add-icon-badge.ts
+function addNormalIconBadge(_0) {
   return __async(this, arguments, function* ({ iconPath, environment, version }) {
     let resultImage = yield import_jimp3.default.read(iconPath);
     const environmentBadge = yield getEnvBadge({ environment });
@@ -146,12 +148,52 @@ function addIconBadge(_0) {
   });
 }
 
+// get-add-adaptive-icon-badge.ts
+var import_jimp4 = __toESM(require("jimp"));
+function addAdaptiveIconBadge(_0) {
+  return __async(this, arguments, function* ({ adaptiveIconPath, environment, version }) {
+    const imageToResize = yield import_jimp4.default.read(adaptiveIconPath);
+    const resizedImage = imageToResize.resize(614, 614);
+    const environmentBadge = yield getEnvBadge({ environment, adaptive: true });
+    if (environmentBadge) {
+      resizedImage.composite(environmentBadge, 0, 0);
+    }
+    const versionBadge = yield getVersionBadge({ version, adaptive: true });
+    if (versionBadge) {
+      resizedImage.composite(versionBadge, 0, 0);
+    }
+    const width = 1024;
+    const height = 1024;
+    const backgroundColor = 0;
+    const compositeImage = new import_jimp4.default(width, height, backgroundColor);
+    const x = (width - resizedImage.bitmap.width) / 2;
+    const y = (height - resizedImage.bitmap.height) / 2;
+    compositeImage.composite(resizedImage, x, y);
+    const resultFilename = getResultPath({
+      iconPath: adaptiveIconPath,
+      environment
+    });
+    compositeImage.writeAsync(resultFilename);
+  });
+}
+
+// index.ts
+function addIconBadge(_0) {
+  return __async(this, arguments, function* ({ iconPath, adaptiveIconPath, environment, version }) {
+    yield addNormalIconBadge({ iconPath, environment, version });
+    if (adaptiveIconPath) {
+      yield addAdaptiveIconBadge({ adaptiveIconPath, environment, version });
+    }
+  });
+}
+
 // app.plugin.ts
-function withIconBadge(config, { environment, iconPath, enabled = true }) {
+function withIconBadge(config, { environment, iconPath, adaptiveIconPath, enabled = true }) {
   if (!enabled)
     return config;
   addIconBadge({
     iconPath,
+    adaptiveIconPath,
     environment,
     version: config.version
   });

@@ -1,17 +1,17 @@
-import { addIconBadge } from './index';
+import { addBadge } from './index';
 
 type Params = {
-  iconPath: string;
+  icon: string;
   environment?: string;
   enabled?: boolean;
 };
 function withIconBadge(
   config: any,
-  { environment, iconPath, enabled = true }: Params
+  { environment, icon, enabled = true }: Params
 ) {
   if(!enabled) return config;
-  addIconBadge({
-    iconPath: iconPath,
+  addBadge({
+    icon: icon,
     environment: environment,
     version: config.version,
   });

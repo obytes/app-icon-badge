@@ -1,5 +1,5 @@
 /**
- * @param {string} iconPath  // path to the app icon
+ * @param {string} icon // path to the app icon
  * @param {string} environment // the app environment staging | development | production
  * @returns {string}
  * @function
@@ -8,17 +8,17 @@
  * get the result image path based on the app environment.
  * @example
  * getResultPath({
- *  iconPath: './assets/icon.png',
+ *  icon: './assets/icon.png',
  * environment: 'development',
  * });
  */
 
 type Params = {
-  iconPath: string;
+  icon: string;
   environment?: string;
 };
-export function getResultPath({ iconPath, environment = 'result' }: Params) {
-  const iconPathArray = iconPath.split('.');
+export function getResultPath({ icon, environment = 'result' }: Params) {
+  const iconPathArray = icon.split('.');
   iconPathArray.splice(iconPathArray.length - 1, 0, environment);
   const resultFilename = iconPathArray.join('.');
   return resultFilename;

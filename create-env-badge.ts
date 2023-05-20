@@ -7,21 +7,21 @@ import path from 'path';
  * @returns {Promise<Jimp>}
  * @async
  * @function
- * @name getEnvBadge
+ * @name createEnvBadge
  * @description
  * Create a new banner overlay based on the app environment.
  * The environment banner is a 1024x180 PNG image.
  * The result image is a composite of the app environment, environment overlay .
  * @example
- * getEnvBadge({
- *  iconPath: './assets/icon.png',
+ * createEnvBadge({
+ *  icon: './assets/icon.png',
  * environment: 'development',
  * });
  */
 type Params = {
   environment?: string;
 };
-export async function getEnvBadge({
+export async function createEnvBadge({
   environment,
 }: Params): Promise<Jimp | null> {
   if (!environment) return null;

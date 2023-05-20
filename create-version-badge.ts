@@ -5,14 +5,14 @@ import path from 'path';
  * @returns {Promise<Jimp>}
  * @async
  * @function
- * @name getVersionBadge
+ * @name createVersionBadge
  * @description
  * Create a new ribbon overlay based on the app version.
  * The version ribbon is a 1024x180 PNG image.
  * The result image is a composite of the app version, version overlay.
  * @example
- * getVersionBadge({
- *  iconPath: './assets/icon.png',
+ * createVersionBadge({
+ *  icon: './assets/icon.png',
  * version: '3.0.0',
  * });
  */
@@ -20,7 +20,7 @@ type Params = {
   version?: string;
 };
 
-export async function getVersionBadge({
+export async function createVersionBadge({
   version,
 }: Params): Promise<Jimp | null> {
   if (!version) return null;

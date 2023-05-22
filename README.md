@@ -62,7 +62,7 @@ export default ({ config }) => ({
     [
       'app-icon-badge',
       {
-        iconPath: './assets/icon.png',
+        icon: './assets/icon.png',
         environment,
         enabled: true, // make sure to add condition to disable it for production builds
       },
@@ -84,13 +84,13 @@ You can enable/disable the plugin by setting the `enabled` property to `true` or
 We also wanted to make it possible to use the library in any React Native project, so we added the ability to use it as a library, but it's up to you to make it work with the build process you are using.
 
 ```javascript
-import { addIconBadge } from 'app-icon-badge';
+import { addBadge } from 'app-icon-badge';
 import path from 'path';
 
-const iconPath = path.resolve(__dirname, './assets/icon.png');
+const icon = path.resolve(__dirname, './assets/icon.png');
 
-addIconBadge({
-  iconPath,
+addBadge({
+  icon,
   version: '3.0.0',
   environment: 'development',
 });

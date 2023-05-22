@@ -13,11 +13,9 @@
   ],
   "scripts": {
     "build": "tsup index.ts --format cjs,esm --dts && cp -r assets dist && tsup app.plugin.ts --format cjs,esm  && cp -r  dist/app.plugin.js .",
-    "release": "pnpm run build && changeset publish",
     "start": "ts-node example/index.ts",
     "type-check": "tsc --noEmit",
     "format": "prettier --write \"**/*.{ts,md,json}\" --ignore-path .gitignore",
-    "preinstall": "npx only-allow pnpm",
     "np": "pnpm build && np --no-cleanup --no-release-draft",
     "test": "echo \"no test specified\"",
     "prepare": "husky install"

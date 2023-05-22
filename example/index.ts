@@ -1,10 +1,10 @@
-import { addIconBadge } from '../index';
+import { addBadge } from '../index';
 import path from 'path';
 
-const iconPath = path.resolve(__dirname, './icon.png');
+const icon = path.resolve(__dirname, './icon.png');
 
-addIconBadge({
-  iconPath,
+addBadge({
+  icon,
   version: '3.0.0',
   environment: 'development',
 });

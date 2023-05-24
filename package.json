@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "build": "tsup index.ts --format cjs,esm --dts && cp -r assets dist && tsup app.plugin.ts --format cjs,esm  && cp -r  dist/app.plugin.js .",
-    "start": "ts-node example/index.ts",
+    "start": "nodemon example/index.ts",
     "type-check": "tsc --noEmit",
     "format": "prettier --write \"**/*.{ts,md,json}\" --ignore-path .gitignore",
     "np": "pnpm build && np --no-cleanup --no-release-draft",
@@ -37,6 +37,7 @@
     "@commitlint/config-conventional": "^17.4.4",
     "@types/node": "^18.15.11",
     "husky": "^8.0.3",
+    "nodemon": "^2.0.22",
     "np": "^7.7.0",
     "prettier": "2.8.7",
     "ts-node": "^10.9.1",

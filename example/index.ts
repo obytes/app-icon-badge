@@ -7,12 +7,23 @@ addBadge({
   icon,
   badges: [
     {
+      type: 'banner',
+      text: 'Top',
+      position: 'top',
+    },
+    {
       type: 'ribbon',
-      text: 'v1.0.0',
+      text: 'Right',
+    },
+    {
+      type: 'ribbon',
+      text: 'Left',
+      position: 'left',
     },
     {
       type: 'banner',
-      text: 'dev',
+      position: 'bottom',
+      text: 'Bottom',
     },
   ],
 });

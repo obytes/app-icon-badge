@@ -6,7 +6,7 @@ const BANNER_HEIGHT = 180;
 
 export async function createBannerBadge({
   text,
-  position,
+  position = 'bottom',
 }: Banner): Promise<Jimp | null> {
   const font = await Jimp.loadFont(Jimp.FONT_SANS_128_WHITE);
 
@@ -37,10 +37,11 @@ export async function createBannerBadge({
   );
 
   // compose the text container image with the banner overlay image
-  const bannerBadge = bannerOverlay.composite(
-    textContainer,
-    0,
-    RIBBON_OVERLAY_HEIGHT - BANNER_HEIGHT + 2
-  );
+  const flipVertical = position === 'top';
+  const textContainerY =
+    position === 'top' ? 0 : RIBBON_OVERLAY_HEIGHT - BANNER_HEIGHT;
+  const bannerBadge = bannerOverlay
+    .flip(false, flipVertical)
+    .composite(textContainer, 0, textContainerY);
   return bannerBadge;
 }

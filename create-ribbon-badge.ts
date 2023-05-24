@@ -3,10 +3,11 @@ import path from 'path';
 import { Ribbon } from './types';
 
 const RIBBON_HEIGHT = 180;
-const RIBBON_ROTATION = -45;
+const RIBBON_ROTATION_RIGHT = -45;
+const RIBBON_ROTATION_LEFT = 45;
 
 export async function createRibbonBadge({
-  position,
+  position = 'right',
   text,
 }: Ribbon): Promise<Jimp | null> {
   const font = await Jimp.loadFont(Jimp.FONT_SANS_128_WHITE);
@@ -34,14 +35,21 @@ export async function createRibbonBadge({
     RIBBON_OVERLAY_WIDTH,
     RIBBON_HEIGHT
   );
-  textContainer.rotate(RIBBON_ROTATION);
-  const translateX = 270;
+  textContainer.rotate(
+    position === 'right' ? RIBBON_ROTATION_RIGHT : RIBBON_ROTATION_LEFT
+  );
+
+  const TRANSLATE_X = position === 'right' ? 270 : -270;
+  const FLIP_HORIZONTAL = position === 'left';
+  const TEXT_CONTAINER_X =
+    position === 'left'
+      ? TRANSLATE_X
+      : RIBBON_OVERLAY_WIDTH - textContainer.bitmap.width + TRANSLATE_X;
+  const TEXT_CONTAINER_Y = position === 'left' ? TRANSLATE_X : -TRANSLATE_X;
 
   // compose the text container image with the ribbon overlay image
-  const ribbonBadge = ribbonOverlay.composite(
-    textContainer,
-    RIBBON_OVERLAY_WIDTH - textContainer.bitmap.width + translateX,
-    -translateX
-  );
+  const ribbonBadge = ribbonOverlay
+    .flip(FLIP_HORIZONTAL, false)
+    .composite(textContainer, TEXT_CONTAINER_X, TEXT_CONTAINER_Y);
   return ribbonBadge;
 }

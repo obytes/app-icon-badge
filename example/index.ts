@@ -5,6 +5,25 @@ const icon = path.resolve(__dirname, './icon.png');
 
 addBadge({
   icon,
-  version: '3.0.0',
-  environment: 'development',
+  badges: [
+    {
+      type: 'banner',
+      text: 'Top',
+      position: 'top',
+    },
+    {
+      type: 'ribbon',
+      text: 'Right',
+    },
+    {
+      type: 'ribbon',
+      text: 'Left',
+      position: 'left',
+    },
+    {
+      type: 'banner',
+      position: 'bottom',
+      text: 'Bottom',
+    },
+  ],
 });

@@ -9,11 +9,20 @@ function withIconBadge(
   config: any,
   { environment, icon, enabled = true }: Params
 ) {
-  if(!enabled) return config;
+  if (!enabled) return config;
+
   addBadge({
     icon: icon,
-    environment: environment,
-    version: config.version,
+    badges: [
+      {
+        type: 'ribbon',
+        text: config.version,
+      },
+      {
+        type: 'banner',
+        text: environment || '',
+      },
+    ],
   });
 
   return config;

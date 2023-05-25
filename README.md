@@ -91,12 +91,16 @@ const icon = path.resolve(__dirname, './assets/icon.png');
 
 addBadge({
   icon,
-  version: '3.0.0',
-  environment: 'development',
+  badges: [
+    {
+      text: 'staging',
+      type: 'banner',
+    },
+  ],
 });
 ```
 
-If you would like to only generate an icon with the version badge, you can skip passing the `environment` argument. The same applies to the `version` argument.
+You can think of badges as layers that will be added to the icon. Each badge has a `text` and a `type` as required configurations. The `text` is the text that will be displayed on the badge, and the `type` is the type of the badge, either `banner` or `ribbon`. You can also add `position`, `color`, and `background` for more customization.
 
 ## 🚧 RoadMap
 
@@ -133,8 +137,9 @@ pnpm install
 pnpm start
 ```
 
-5. Make your changes and make sure the example is running without any issues.
-6. Commit & push your changes then open a new Pull Request.
+For a better experience, we are using `nodemon` to watch for changes and re-run the example while developing. Make sure to open the resulting image with Visual Studio Code and split the screen to see the changes live.
+
+5. Commit & push your changes then open a new Pull Request.
 
 Feel free to open an issue if you have a suggestion, question, or feedback.
 

@@ -12,6 +12,7 @@ export async function addBadge({ icon, badges = [] }: Params) {
       badge.type === 'ribbon'
         ? await createRibbonBadge(badge)
         : await createBannerBadge(badge);
+
     if (badgeImage) {
       resultImage.composite(badgeImage, 0, 0);
     }

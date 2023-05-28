@@ -1,6 +1,7 @@
 import Jimp from 'jimp';
 import path from 'path';
 import { Ribbon } from './types';
+import { loadOverlay } from './load-overlay';
 
 const RIBBON_HEIGHT = 180;
 const RIBBON_ROTATION_RIGHT = -45;
@@ -9,12 +10,17 @@ const RIBBON_ROTATION_LEFT = 45;
 export async function createRibbonBadge({
   position = 'right',
   text,
+  color = 'white',
+  background,
 }: Ribbon): Promise<Jimp | null> {
-  const font = await Jimp.loadFont(Jimp.FONT_SANS_128_WHITE);
-
-  const ribbonOverlay = await Jimp.read(
-    path.resolve(__dirname, 'assets/version-badge.png')
+  const font = await Jimp.loadFont(
+    color === 'black' ? Jimp.FONT_SANS_128_BLACK : Jimp.FONT_SANS_128_WHITE
   );
+
+  const ribbonOverlay = await loadOverlay({
+    path: path.resolve(__dirname, 'assets/version-badge.png'),
+    background,
+  });
   const RIBBON_OVERLAY_WIDTH = ribbonOverlay.bitmap.width;
 
   // we need a helper image as container for the text as we are going to rotate it later
@@ -23,12 +29,13 @@ export async function createRibbonBadge({
     RIBBON_HEIGHT,
     'transparent'
   );
-  await textContainer.print(
+  textContainer.print(
     font,
     0,
     0,
     {
       text: text,
+      color: 'red',
       alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
       alignmentY: Jimp.VERTICAL_ALIGN_MIDDLE,
     },

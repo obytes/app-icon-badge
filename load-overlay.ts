@@ -53,7 +53,7 @@ const replaceColor = ({ image, from, to }: ParamsRC) => {
     ]);
     // check if the current pixel is close to the from color in LAB color space
     // replace the current pixel with the to color
-    if (getDelta(currentLABColor, fromColor, 'E00') <= 2.3) {
+    if (getDelta(currentLABColor, fromColor) <= 2.3) {
       image.bitmap.data[idx] = toColor[0];
       image.bitmap.data[idx + 1] = toColor[1];
       image.bitmap.data[idx + 2] = toColor[2];
@@ -63,8 +63,8 @@ const replaceColor = ({ image, from, to }: ParamsRC) => {
   return image;
 };
 
-const getDelta = (LAB1: any, LAB2: any, formula: any) => {
-  return deltaE[`getDelta${formula}`](
+const getDelta = (LAB1: Array<number>, LAB2: Array<number>) => {
+  return deltaE[`getDeltaE00`](
     { L: LAB1[0], A: LAB1[1], B: LAB1[2] },
     { L: LAB2[0], A: LAB2[1], B: LAB2[2] }
   );

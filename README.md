@@ -91,6 +91,7 @@ const icon = path.resolve(__dirname, './assets/icon.png');
 
 addBadge({
   icon,
+  suffix: 'development', // by default it will be 'result', but you can customize it
   badges: [
     {
       text: 'staging',

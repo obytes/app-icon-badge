@@ -1,18 +1,23 @@
 import Jimp from 'jimp';
 import path from 'path';
 import { Banner } from './types';
+import { loadOverlay } from './load-overlay';
 
 const BANNER_HEIGHT = 180;
 
 export async function createBannerBadge({
   text,
   position = 'bottom',
+  color = 'white',
+  background,
 }: Banner): Promise<Jimp | null> {
-  const font = await Jimp.loadFont(Jimp.FONT_SANS_128_WHITE);
-
-  const bannerOverlay = await Jimp.read(
-    path.resolve(__dirname, 'assets/env-badge.png')
+  const font = await Jimp.loadFont(
+    color === 'black' ? Jimp.FONT_SANS_128_BLACK : Jimp.FONT_SANS_128_WHITE
   );
+  const bannerOverlay = await loadOverlay({
+    path: path.resolve(__dirname, 'assets/env-badge.png'),
+    background,
+  });
 
   const RIBBON_OVERLAY_WIDTH = bannerOverlay.bitmap.width;
   const RIBBON_OVERLAY_HEIGHT = bannerOverlay.bitmap.height;
@@ -23,7 +28,7 @@ export async function createBannerBadge({
     BANNER_HEIGHT,
     'transparent'
   );
-  await textContainer.print(
+  textContainer.print(
     font,
     0,
     0,

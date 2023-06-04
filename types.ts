@@ -2,7 +2,7 @@ export type Banner = {
   type: 'banner';
   text: string;
   position?: 'top' | 'bottom';
-  color?: string;
+  color?: 'white' | 'black';
   background?: string;
 };
 
@@ -10,7 +10,7 @@ export type Ribbon = {
   type: 'ribbon';
   text: string;
   position?: 'left' | 'right';
-  color?: string;
+  color?: 'white' | 'black';
   background?: string;
 };
 

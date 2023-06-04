@@ -95,6 +95,8 @@ addBadge({
     {
       text: 'staging',
       type: 'banner',
+      color: 'white', // by default it will be white and the only color supported for now is white and black
+      background: '#FF0000', // by default it will be black and we are only supporting hex format for colors
     },
   ],
 });
@@ -111,7 +113,7 @@ The library is still in its early stages. We have a lot of ideas to improve it a
 - [x] publish the library to npm
 - [ ] Add support for Android Adaptive Icons
 - [ ] Add Tests
-- [ ] Add support for custom badge colors
+- [x] Add support for custom badge colors
 - [ ] Add the ability to run as a CLI tool
 
 Feel free to suggest any other features or contribute to the project yourself by helping us implement upcoming features.

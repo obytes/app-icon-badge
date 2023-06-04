@@ -10,10 +10,13 @@ addBadge({
       type: 'banner',
       text: 'Top',
       position: 'top',
+      background: '#0045FF',
     },
     {
       type: 'ribbon',
       text: 'Right',
+      background: '#FF0000',
+      color: 'black',
     },
     {
       type: 'ribbon',

@@ -13,6 +13,7 @@ function withIconBadge(
 
   addBadge({
     icon: icon,
+    suffix: environment,
     badges: [
       {
         type: 'ribbon',

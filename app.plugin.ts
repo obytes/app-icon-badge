@@ -3,18 +3,18 @@ import { addBadge } from './index';
 type Params = {
   icon: string;
   environment?: string;
-  customPath?: string;
+  dstPath?: string;
   enabled?: boolean;
 };
 function withIconBadge(
   config: any,
-  { environment, icon, customPath, enabled = true }: Params
+  { environment, icon, dstPath, enabled = true }: Params
 ) {
   if (!enabled) return config;
 
   addBadge({
     icon: icon,
-    customPath: customPath,
+    dstPath: dstPath,
     badges: [
       {
         type: 'ribbon',

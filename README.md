@@ -63,6 +63,7 @@ export default ({ config }) => ({
       'app-icon-badge',
       {
         icon: './assets/icon.png',
+        customPath: './assets/icon.${environment}.png', // optional, if not provided the icon will be generated in the same directory as the original icon under  the name 'icon.result.png'
         environment,
         enabled: true, // make sure to add condition to disable it for production builds
       },
@@ -91,6 +92,7 @@ const icon = path.resolve(__dirname, './assets/icon.png');
 
 addBadge({
   icon,
+  customPath: './assets/icon.${environment}.png', // optional, if not provided the icon will be generated in the same directory as the original icon under  the name 'icon.result.png'
   badges: [
     {
       text: 'staging',

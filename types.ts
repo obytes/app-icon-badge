@@ -1,3 +1,5 @@
+import exp from 'constants';
+
 export type Banner = {
   type: 'banner';
   text: string;
@@ -14,8 +16,10 @@ export type Ribbon = {
   background?: string;
 };
 
+export type Badge = Banner | Ribbon;
+
 export type Params = {
   icon: string;
   dstPath?: string;
-  badges: Array<Banner | Ribbon>;
+  badges: Array<Badge>;
 };

@@ -16,5 +16,6 @@ export type Ribbon = {
 
 export type Params = {
   icon: string;
+  dstPath?: string;
   badges: Array<Banner | Ribbon>;
 };

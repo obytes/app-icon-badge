@@ -15,11 +15,10 @@
 
 type Params = {
   icon: string;
-  environment?: string;
 };
-export function getResultPath({ icon, environment = 'result' }: Params) {
+export function getResultPath({ icon }: Params) {
   const iconPathArray = icon.split('.');
-  iconPathArray.splice(iconPathArray.length - 1, 0, environment);
+  iconPathArray.splice(iconPathArray.length - 1, 0, 'result');
   const resultFilename = iconPathArray.join('.');
   return resultFilename;
 }

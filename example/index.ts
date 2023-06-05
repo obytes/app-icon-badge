@@ -5,6 +5,7 @@ const icon = path.resolve(__dirname, './icon.png');
 
 addBadge({
   icon,
+  dstPath: path.resolve(__dirname, './result.png'),
   badges: [
     {
       type: 'banner',

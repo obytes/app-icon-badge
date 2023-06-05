@@ -4,7 +4,7 @@ import { createRibbonBadge } from './create-ribbon-badge';
 import { getResultPath } from './get-result-path';
 import { Params } from './types';
 
-export async function addBadge({ icon, badges = [] }: Params) {
+export async function addBadge({ icon, dstPath, badges = [] }: Params) {
   const resultImage = await Jimp.read(icon);
 
   for (const badge of badges) {
@@ -19,9 +19,11 @@ export async function addBadge({ icon, badges = [] }: Params) {
   }
 
   // Save the result image to a file with app environment name as suffix
-  const resultFilename = getResultPath({
-    icon: icon,
-  });
+  const resultFilename = dstPath
+    ? dstPath
+    : getResultPath({
+        icon: icon,
+      });
   resultImage.writeAsync(resultFilename);
   return resultFilename;
 }

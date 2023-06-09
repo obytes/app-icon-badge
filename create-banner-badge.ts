@@ -2,22 +2,19 @@ import Jimp from 'jimp';
 import path from 'path';
 import { Banner } from './types';
 import { loadOverlay } from './load-overlay';
+import { getFont } from './utils';
 
 export async function createBannerBadge(
   { text, position = 'bottom', color = 'white', background }: Banner,
   isAdaptiveIcon: Boolean = false
 ): Promise<Jimp | null> {
-  // collect config  for the banner logic
-  const IS_FONT_BLACK = color === 'black';
   const IS_POSITION_TOP = position === 'top';
-  const BANNER_HEIGHT = isAdaptiveIcon ? 320 : 180; // magic number from banners overlay images
+  const BANNER_HEIGHT = isAdaptiveIcon ? 310 : 180; // magic number from banners overlay images
   const OVERLAY_PATH = isAdaptiveIcon
     ? 'assets/banner-overlay-adaptive.png'
     : 'assets/banner-overlay.png';
 
-  const font = await Jimp.loadFont(
-    IS_FONT_BLACK ? Jimp.FONT_SANS_128_BLACK : Jimp.FONT_SANS_128_WHITE
-  );
+  const font = await Jimp.loadFont(getFont(isAdaptiveIcon, color === 'black'));
   const bannerOverlay = await loadOverlay({
     path: OVERLAY_PATH,
     background,

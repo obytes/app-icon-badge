@@ -22,4 +22,5 @@ export type Params = {
   icon: string;
   dstPath?: string;
   badges: Array<Badge>;
+  isAdaptiveIcon?: boolean;
 };

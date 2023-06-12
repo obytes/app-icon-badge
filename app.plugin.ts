@@ -20,22 +20,25 @@ function withIconBadge(config: any, { badges, enabled = true }: Params) {
 
   // Generate icon with badge
   // normally addBadge is async but we don't need to wait for it also not sure how to use async in this context
-  addBadge({
-    icon: iconPath,
-    dstPath: DST_ICON,
-    badges,
-  });
+  if (iconPath) {
+    addBadge({
+      icon: iconPath,
+      dstPath: DST_ICON,
+      badges,
+    });
+    config.icon = DST_ICON;
+  }
 
   // waiting for the adaptive icon support here
-  addBadge({
-    icon: adaptiveIconPath,
-    dstPath: DST_ADAPTIVE_APP_ICON,
-    badges,
-  });
-
-  // replace config paths with the new ones
-  config.icon = DST_ICON;
-  config.android.adaptiveIcon.foregroundImage = DST_ADAPTIVE_APP_ICON;
+  if (adaptiveIconPath) {
+    addBadge({
+      isAdaptiveIcon: true,
+      icon: adaptiveIconPath,
+      dstPath: DST_ADAPTIVE_APP_ICON,
+      badges,
+    });
+    config.android.adaptiveIcon.foregroundImage = DST_ADAPTIVE_APP_ICON;
+  }
 
   return config;
 }

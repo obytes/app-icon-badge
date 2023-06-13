@@ -47,6 +47,12 @@ jobs:
         with:
           node-version: 18
           cache: 'pnpm'
+          
+      - name: Set up npm registry
+        run: npm config set registry https://registry.npmjs.org/
+
+      - name: Log in to npm
+        run: echo "//registry.npmjs.org/:_authToken=\${NPMJS_ACCESS_TOKEN}" > ~/.npmrc    
 
       - name: 📦 Install Project Dependencies
         run: pnpm install --frozen-lockfile

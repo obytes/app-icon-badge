@@ -4,14 +4,19 @@ import { createRibbonBadge } from './create-ribbon-badge';
 import { getResultPath } from './get-result-path';
 import { Params } from './types';
 
-export async function addBadge({ icon, dstPath, badges = [] }: Params) {
+export async function addBadge({
+  icon,
+  dstPath,
+  isAdaptiveIcon = false,
+  badges = [],
+}: Params) {
   const resultImage = await Jimp.read(icon);
 
   for (const badge of badges) {
     const badgeImage =
       badge.type === 'ribbon'
-        ? await createRibbonBadge(badge)
-        : await createBannerBadge(badge);
+        ? await createRibbonBadge(badge, isAdaptiveIcon)
+        : await createBannerBadge(badge, isAdaptiveIcon);
 
     if (badgeImage) {
       resultImage.composite(badgeImage, 0, 0);

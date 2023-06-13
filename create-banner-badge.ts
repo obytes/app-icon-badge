@@ -2,29 +2,30 @@ import Jimp from 'jimp';
 import path from 'path';
 import { Banner } from './types';
 import { loadOverlay } from './load-overlay';
+import { getFont } from './utils';
 
-const BANNER_HEIGHT = 180;
+export async function createBannerBadge(
+  { text, position = 'bottom', color = 'white', background }: Banner,
+  isAdaptiveIcon: Boolean = false
+): Promise<Jimp | null> {
+  const IS_POSITION_TOP = position === 'top';
+  const BANNER_HEIGHT = isAdaptiveIcon ? 310 : 180; // magic number from banners overlay images
+  const OVERLAY_PATH = isAdaptiveIcon
+    ? 'assets/banner-overlay-adaptive.png'
+    : 'assets/banner-overlay.png';
 
-export async function createBannerBadge({
-  text,
-  position = 'bottom',
-  color = 'white',
-  background,
-}: Banner): Promise<Jimp | null> {
-  const font = await Jimp.loadFont(
-    color === 'black' ? Jimp.FONT_SANS_128_BLACK : Jimp.FONT_SANS_128_WHITE
-  );
+  const font = await Jimp.loadFont(getFont(isAdaptiveIcon, color === 'black'));
   const bannerOverlay = await loadOverlay({
-    path: path.resolve(__dirname, 'assets/env-badge.png'),
+    path: OVERLAY_PATH,
     background,
   });
 
-  const RIBBON_OVERLAY_WIDTH = bannerOverlay.bitmap.width;
-  const RIBBON_OVERLAY_HEIGHT = bannerOverlay.bitmap.height;
+  const BANNER_OVERLAY_WIDTH = bannerOverlay.bitmap.width;
+  const BANNER_OVERLAY_HEIGHT = bannerOverlay.bitmap.height;
 
   // create text container image
   const textContainer = new Jimp(
-    RIBBON_OVERLAY_WIDTH,
+    BANNER_OVERLAY_WIDTH,
     BANNER_HEIGHT,
     'transparent'
   );
@@ -35,18 +36,22 @@ export async function createBannerBadge({
     {
       text: text.toUpperCase(),
       alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
-      alignmentY: Jimp.VERTICAL_ALIGN_MIDDLE,
+      alignmentY: isAdaptiveIcon // in adaptive icon mode, the text should be aligned to the opposite side
+        ? IS_POSITION_TOP
+          ? Jimp.VERTICAL_ALIGN_BOTTOM
+          : Jimp.VERTICAL_ALIGN_TOP
+        : Jimp.VERTICAL_ALIGN_MIDDLE,
     },
-    RIBBON_OVERLAY_WIDTH,
+    BANNER_OVERLAY_WIDTH,
     BANNER_HEIGHT
   );
 
   // compose the text container image with the banner overlay image
-  const flipVertical = position === 'top';
-  const textContainerY =
-    position === 'top' ? 0 : RIBBON_OVERLAY_HEIGHT - BANNER_HEIGHT;
+  const textContainerY = IS_POSITION_TOP
+    ? 0
+    : BANNER_OVERLAY_HEIGHT - BANNER_HEIGHT;
   const bannerBadge = bannerOverlay
-    .flip(false, flipVertical)
+    .flip(false, IS_POSITION_TOP)
     .composite(textContainer, 0, textContainerY);
   return bannerBadge;
 }

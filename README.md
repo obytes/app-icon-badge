@@ -1,5 +1,5 @@
 <p align="center">
-    <img alt="App Icon Badge" src="./screenshot.png"   />
+    <img alt="App Icon Badge" src="https://github.com/obytes/react-native-template-obytes/assets/11137944/944a6159-7d81-4793-a74a-43c673733bb3"   />
 </p>
 <h1 align="center">
 App Icon Badge

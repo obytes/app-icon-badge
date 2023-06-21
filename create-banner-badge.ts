@@ -16,7 +16,7 @@ export async function createBannerBadge(
 
   const font = await Jimp.loadFont(getFont(isAdaptiveIcon, color === 'black'));
   const bannerOverlay = await loadOverlay({
-    path: OVERLAY_PATH,
+    path: path.resolve(__dirname, OVERLAY_PATH),
     background,
   });
 

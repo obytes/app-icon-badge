@@ -1,5 +1,5 @@
 <p align="center">
-    <img alt="App Icon Badge" src="./screenshot.png"   />
+    <img alt="App Icon Badge" src="https://github.com/obytes/react-native-template-obytes/assets/11137944/944a6159-7d81-4793-a74a-43c673733bb3"   />
 </p>
 <h1 align="center">
 App Icon Badge
@@ -10,14 +10,6 @@ App Icon Badge
 
 <hr/>
 
-## 👀 Overview
-
-The library uses [Jimp](https://www.npmjs.com/package/jimp), an image-processing library for Node with zero native dependencies, to generate app icons with environment or version badges.
-
-This Library was built to work with expo projects, but it can also be used in any React Native project and as a standalone library to generate icons with badges.
-
-> Worth mentioning that this library was built to be added to the build process of our react native starter kit [Obytes Starter](https://starter.obytes.com/). The starter kit is based on the best practices and tools that we have found to be most effective in our own projects and it comes with this library pre-installed and configured. Make sure to give it a try if you are looking for a React Native starter kit.
-
 ## 🚀 Motivation
 
 During the development of a mobile application, we typically generate different applications based on the environment (staging, development, production).
@@ -25,6 +17,13 @@ During the development of a mobile application, we typically generate different 
 However, it starts getting confusing when we install all of them on our device, especially if they have the same icon and name. In addition to that, it is difficult for our testers to trace bugs not knowing which version of the application they are using.
 
 Therefore, we need a way to differentiate the applications based on the environment and version. This library generates a badge with the environment and version information and adds it to the app icon.
+
+## 📱 Features
+
+- 🙌 Easy to use as an Expo plugin or a simple library.
+- 📱 Supports universal icons and adaptive icons.
+- 🧩 Supports multiple badges.
+- 🎨 Fully customizable; you can change the badge text, color, background, and position.
 
 ## 📦 Installation
 
@@ -41,44 +40,63 @@ pnpm add app-icon-badge
 
 ## 🛠️ Usage
 
-### As an Expo Plugin
+### Expo Plugin
 
-As we mentioned above, we built the package to be used in Expo projects and generate icons that will be provided to the `icon` property in `app.json`. You can learn more about that in the [Expo documentation](https://docs.expo.dev/develop/user-interface/app-icons).
+As we mentioned above, we built the package to be used in Expo projects and generate icons that will be provided to the `icon` and `android.adaptiveIcon.foregroundImage` properties in `app.json`. So, we recommend following the [official Expo documentation](https://docs.expo.dev/develop/user-interface/app-icons) to generate the icons.
 
-We found out that the best possible way to generate these icons during `prebuild` is to use an [Expo plugin](https://docs.expo.dev/modules/config-plugin-and-native-module-tutorial/#4-creating-a-new-config-plugin).
-
-Adding our plugin will guarantee that the icon is generated every time you run prebuild.
+To use the plugin, you need to add it to your `app.config.js` file.
 
 ```javascript
 // app.config.js
-const environment = 'staging'; // should be dynamic based on the environment
+const environment = 'staging'; // development, staging, production
 
 export default ({ config }) => ({
   // your config here ...
   ...config,
   name: 'my-app',
-  icon: `./assets/icon.${environment}.png`,
+  icon: './assets/icon.png',
+  android: {
+    adaptiveIcon: {
+      foregroundImage: './assets/adaptive-icon.png',
+      backgroundColor: '#FFFFFF',
+    },
+  },
   plugins: [
     [
       'app-icon-badge',
       {
-        icon: './assets/icon.png',
-        dstPath: './assets/icon.${environment}.png', // optional, if not provided the icon will be generated in the same directory as the original icon under  the name 'icon.result.png'
-        environment,
-        enabled: true, // make sure to add condition to disable it for production builds
+        enabled: true, // enable/ disable the plugin based on the environment (usually disabled for production builds)
+        badges: [
+          {
+            text: environment, // banner text
+            type: 'banner', // banner or ribbon
+            color: 'white', // by default it will be white and the only color supported for now is white and black
+            background: '#FF0000', // by default it will be black and we are only supporting hex format for colors
+          },
+          {
+            text: 'V1.0.1',
+            type: 'ribbon',
+          },
+        ],
       },
     ],
   ],
 });
 ```
 
-The app icon size should be 1024x1024 and we recommend following the [Expo guidelines](https://docs.expo.dev/develop/user-interface/app-icons) to generate the icon.
+Options:
 
-The plugin will generate a new icon with the environment as a suffix, like the following `./assets/icon.${environment}.png`, in the same directory as the original icon. then the new icon will be used in the `icon` and after the prebuild is done, all native assets will be generated with the new icon.
+- `enabled` - enable/disable the plugin based on the environment (usually disabled for production builds)
+- `badges` - an array of badges, you can think of it as an array of layers that will be added to the icon. Each badge has :
+  - `text` - the text that will be displayed on the badge.
+  - `type` - the type of the badge, either `banner` or `ribbon` (default is `banner`).
+  - `position` - the position of the badge, based on the `type` property, it can be `top` or `bottom` for `banner` and `left` or `right` for `ribbon` (default is `top` for `banner` and `right` for `ribbon`).
+  - `color` - the color of the text only `black` and `white` color are supported (default is `white`).
+  - `background` - the background color of the badge, only hex format is supported (default is `#000000`).
 
-You can enable/disable the plugin by setting the `enabled` property to `true` or `false`. You would usually want to disable it for production builds.
+> Note: please refer to [our starter](https://github.com/obytes/react-native-template-obytes/blob/master/app.config.ts) for a complete working example.
 
-> Note: if for some reason you fill lost 🙃 and don't know how to use the plugin, please refer to our starter for a complete working example.
+This plugin, when enabled, will use the `icon` and `android.adaptiveIcon.foregroundImage` properties in `app.json` to generate icons with badges, which will be saved in the `.expo` directory. The plugin will then update your Expo config to use these new icons instead of the original ones. If you are familiar with Expo plugins, you can take a look at the [source code](https://github.com/obytes/app-icon-badge/blob/master/app.plugin.ts).
 
 ### As a library
 
@@ -100,11 +118,24 @@ addBadge({
       color: 'white', // by default it will be white and the only color supported for now is white and black
       background: '#FF0000', // by default it will be black and we are only supporting hex format for colors
     },
+    {
+      text: 'V1.0.1',
+      type: 'ribbon',
+    },
   ],
 });
 ```
 
-You can think of badges as layers that will be added to the icon. Each badge has a `text` and a `type` as required configurations. The `text` is the text that will be displayed on the badge, and the `type` is the type of the badge, either `banner` or `ribbon`. You can also add `position`, `color`, and `background` for more customization.
+## API
+
+- `icon` - the path to the original icon you want to add the badge to.
+- `dstPath` - the path to the generated icon with the badge. If not provided, the icon will be generated in the same directory as the original icon under the name `icon.result.png`.
+- `badges` - an array of badges, you can think of it as an array of layers that will be added to the icon. Each badge has :
+  - `text` - the text that will be displayed on the badge.
+  - `type` - the type of the badge, either `banner` or `ribbon` (default is `banner`).
+  - `position` - the position of the badge, based on the `type` property, it can be `top` or `bottom` for `banner` and `left` or `right` for `ribbon` (default is `top` for `banner` and `right` for `ribbon`).
+  - `color` - the color of the text only `black` and `white` color are supported (default is `white`).
+  - `background` - the background color of the badge, only hex format is supported (default is `#000000`).
 
 ## 🚧 RoadMap
 
@@ -113,12 +144,20 @@ The library is still in its early stages. We have a lot of ideas to improve it a
 - [x] Generate icons with environment & version badges for ios
 - [x] Expo plugin
 - [x] publish the library to npm
-- [ ] Add support for Android Adaptive Icons
+- [x] Add support for Android Adaptive Icons
 - [ ] Add Tests
 - [x] Add support for custom badge colors
 - [ ] Add the ability to run as a CLI tool
 
 Feel free to suggest any other features or contribute to the project yourself by helping us implement upcoming features.
+
+## 👀 More about the library
+
+The library uses [Jimp](https://www.npmjs.com/package/jimp), an image-processing library for Node with zero native dependencies, to generate app icons with environment or version badges.
+
+This Library was built to work with expo projects, but it can also be used in any React Native project and as a standalone library to generate icons with badges.
+
+> Worth mentioning that this library was built to be added to the build process of our react native starter kit [Obytes Starter](https://starter.obytes.com/). The starter kit is based on the best practices and tools that we have found to be most effective in our own projects and it comes with this library pre-installed and configured. Make sure to give it a try if you are looking for a React Native starter kit.
 
 ## 🔥 How to contribute?
 

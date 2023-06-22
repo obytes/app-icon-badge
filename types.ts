@@ -1,5 +1,3 @@
-import exp from 'constants';
-
 export type Banner = {
   type: 'banner';
   text: string;

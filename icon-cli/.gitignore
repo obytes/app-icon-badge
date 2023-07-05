@@ -1,0 +1,6 @@
+node_modules/
+assets/*.*.png
+example/*.*.png
+dist
+app.plugin.js
+.DS_Store

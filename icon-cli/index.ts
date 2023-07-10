@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { addBadge } from 'app-icon-badge';
 import path from 'path';
 import { exit } from 'process';
@@ -9,6 +10,9 @@ if(process.argv[2] == undefined){
   console.log("Please provide environment name as argument");
   exit(1);
 }
+const badge = parseBadgeJsonConfigFile(process.argv[2]);
+if(badge)
+addBadge(badge);
 
 /**
  * -dir ./images

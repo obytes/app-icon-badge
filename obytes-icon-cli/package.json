@@ -1,8 +1,8 @@
 {
-  "name": "icon-cli",
+  "name": "obytes-icon-cli",
   "version": "0.0.1",
   "description": "cli tool for app icon badge plugin",
-  "main": "index.ts",
+  "main": "index.js",
   "scripts": {
     "build": "tsup index.ts  --format cjs,esm --dts ",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,7 +13,7 @@
     "url": "git+https://github.com/obytes/app-icon-badge.git"
   },
   "bin": {
-    "icon-cli": "./index.js"
+    "obytes-icon-cli": "./index.js"
   },
   "author": "Obytes Team",
   "license": "MIT",

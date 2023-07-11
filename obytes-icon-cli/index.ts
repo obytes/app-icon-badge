@@ -7,10 +7,11 @@ import { parseBadgeJsonConfigFile } from './parse-badge-json-config-file';
 
 
 if(process.argv[2] == undefined){
-  console.log("Please provide environment name as argument");
+  console.log("Please provide a valid path to the config file");
   exit(1);
 }
-const badge = parseBadgeJsonConfigFile(process.argv[2]);
+const configPath = path.resolve(__dirname,process.argv[2]);
+const badge = parseBadgeJsonConfigFile(configPath);
 if(badge)
 addBadge(badge);
 

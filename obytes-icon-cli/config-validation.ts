@@ -3,7 +3,6 @@ import path from 'path';
 import { fromZodError } from 'zod-validation-error';
 import chalk from 'chalk';
 import type { Params } from '../types';
-import def from 'ajv/dist/vocabularies/discriminator';
 
 const HEX_COLOR_REGEX = /^#[0-9a-fA-F]{6}$/;
 
@@ -11,15 +10,7 @@ const Badge = z.discriminatedUnion("type",[
     z.object({
       type:z.literal('banner'),
       text:z.string(),position:z.union([z.literal('top'),z.literal('bottom')]).optional(),
-      color:z.union([z.literal('white'),z.literal('black')],{errorMap:(issue,_ctx) => {
-        switch(issue.code)
-        {
-          case 'invalid_enum_value':
-            return {message:"color should be either 'white' or 'black'"};
-            default:
-            return {message:issue?.message ?? "something went wrong" };
-        }
-      }}).optional(),
+      color:z.union([z.literal('white'),z.literal('black')]).optional(),
       background:z.string().regex(HEX_COLOR_REGEX).optional()}),
     z.object({
       type:z.literal('ribbon'),
@@ -28,18 +19,19 @@ const Badge = z.discriminatedUnion("type",[
       background:z.string({invalid_type_error:"background color should be in hex format"}).regex(HEX_COLOR_REGEX).optional()})
 ]);
 
-const ConfigParamsSchema = z.object({
+const configParamsSchema = z.object({
     icon: z.string(),
     dstPath: z.string().optional(),
     badges: z.array(Badge),
     isAdaptiveIcon: z.boolean().optional()
 });
 
+const badgesArray = z.array(configParamsSchema);
 
-export const validateConfig = (config:Params) => {
+export const validateConfig = (configs:Params[]) => {
     try
     {
-        ConfigParamsSchema.parse(config);
+      badgesArray.parse(configs);
     }catch(err){
         if(err instanceof z.ZodError)
         {

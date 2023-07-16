@@ -3,7 +3,7 @@ import type { Params } from '../types';
 import { validateConfig } from './config-validation';
 import path from 'path';
 import chalk from 'chalk';
-import { addBadge } from 'app-icon-badge';
+import { addBadge } from '../index';
 
 export function parseBadgeJsonConfigFile(filePath: string) {
   const resolvedPath = path.resolve(filePath);

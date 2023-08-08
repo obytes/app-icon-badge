@@ -1,16 +1,16 @@
 import { parseBadgeJsonConfigFile } from './parse-badge-json-config-file';
-import fs from 'fs';
-import path, { parse } from 'path';
-import { IconConfig } from './make-icon';
+import { IconConfig } from './icon-config';
 import { addBadge } from '..';
 import { Badge } from '../types';
 import { Command, Option } from 'commander';
 
+var version = require('../package.json').version;
+
 const program = new Command();
 program
   .description('command line for app-icon-badge')
-  .version('0.0.1')
-  .name('app-icon-badge');
+  .name('app-icon-badge')
+  .version(version);
 
 // default command
 program
@@ -62,6 +62,7 @@ program.addCommand(
 export async function parseArgument() {
   if (process.argv.length <= 2) {
     program.help();
+    return;
   }
   const opts = program.parse().opts();
   if (opts.iconPath) {

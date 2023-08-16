@@ -12,13 +12,17 @@
     "app.plugin.js"
   ],
   "scripts": {
-    "build": "tsup index.ts  --format cjs,esm --dts && cp -r assets dist && tsup app.plugin.ts --format cjs ",
+    "build": "tsup index.ts  --format cjs,esm --dts && cp -r assets dist && tsup app.plugin.ts --format cjs && tsup cli/cli.ts",
     "start": "nodemon --exec ts-node --files example/index.ts",
+    "start-cli": "nodemon --exec ts-node --files cli/cli.ts",
     "type-check": "tsc --noEmit",
     "format": "prettier --write \"**/*.{ts,md,json}\" --ignore-path .gitignore",
     "np": "pnpm build && np --no-cleanup --no-release-draft",
     "test": "echo \"no test specified\"",
     "prepare": "husky install"
+  },
+  "bin": {
+    "obytes-icon-cli": "dist/cli.js"
   },
   "repository": {
     "type": "git",
@@ -31,6 +35,7 @@
   "homepage": "https://github.com/obytes/app-icon-badge#readme",
   "dependencies": {
     "color-convert": "^2.0.1",
+    "commander": "^11.0.0",
     "delta-e": "^0.0.8",
     "jimp": "^0.22.7"
   },
@@ -38,12 +43,16 @@
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
     "@types/node": "^18.15.11",
+    "ajv": "^8.12.0",
+    "chalk": "^4.1.2",
     "husky": "^8.0.3",
     "nodemon": "^2.0.22",
     "np": "^7.7.0",
     "prettier": "2.8.7",
     "ts-node": "^10.9.1",
     "tsup": "^6.5.0",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "zod": "^3.21.4",
+    "zod-validation-error": "^1.3.1"
   }
 }

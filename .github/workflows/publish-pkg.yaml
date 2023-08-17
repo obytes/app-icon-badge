@@ -43,22 +43,20 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 8
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'pnpm'
-          
-      - name: Set up npm registry
-        run: npm config set registry https://registry.npmjs.org/
-
-      - name: Log in to npm
-        run: echo "//registry.npmjs.org/:_authToken=\${NPMJS_ACCESS_TOKEN}" > ~/.npmrc    
 
       - name: 📦 Install Project Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: 🏃‍♂️ Run np release
+      - name: 🏃‍♂️ Create tag
         run: |
-          pnpm run np ${{ github.event.inputs.release-type }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
+          pnpm run np ${{ github.event.inputs.release-type }} --no-publish
+
+      - name: 📦 Publish to npm
+        uses: JS-DevTools/npm-publish@v2
+        with:
+          token: ${{ secrets.NPMJS_ACCESS_TOKEN }}

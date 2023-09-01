@@ -170,7 +170,7 @@ Options:
 ```
 #### example
 ```
-app-icon-badge ./example/icon.png --type=ribbon --text=text --position=top --background=#45f4ee --color=black
+app-icon-badge ./example/icon.png --type=banner --text=hello --position=top --background=#45f4ee --color=black
 ```
 ## 🚧 RoadMap
 

@@ -16,20 +16,25 @@ program
 program
   .addCommand(
     new Command('add-badge')
-      .description('add badge to icon using add-badge by default')
-      .argument('<iconPath>')
+      .description(
+        "add badge to the icon runs by default you don' need to specify this command "
+      )
+      .argument('<iconPath>', 'required argument, icon path')
       .addOption(
-        new Option('-t, --type <type>', 'badge type')
+        new Option('-t, --type <type>', 'required option')
           .choices(['banner', 'ribbon'])
           .makeOptionMandatory()
       )
       .addOption(
-        new Option('-x, --text <text>', 'badge text').makeOptionMandatory()
+        new Option(
+          '-x, --text <text>',
+          'required option you need to provide text value'
+        ).makeOptionMandatory()
       )
       .addOption(
         new Option(
           '-p, --position <position>',
-          'badge position banner:top,bottom ribbon:left,right'
+          'badge position banner:top,bottom and  ribbon:left,right'
         ).choices(['top', 'left', 'right', 'bottom'])
       )
       .addOption(
@@ -40,6 +45,7 @@ program
           .choices(['white', 'black'])
           .default('white')
       )
+      .helpOption(false)
       .action((iconPath, opts) => {
         program.setOptionValue('iconPath', iconPath);
         program.setOptionValue('badge', opts);

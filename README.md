@@ -137,6 +137,42 @@ addBadge({
   - `color` - the color of the text only `black` and `white` color are supported (default is `white`).
   - `background` - the background color of the badge, only hex format is supported (default is `#000000`).
 
+## You can also use it as a CLI tool by running: `npx app-icon-badge ......`
+
+```
+Usage: app-icon-badge [options] [command]
+
+command line for app-icon-badge
+
+Options:
+  -V, --version                   output the version number
+  -h, --help                      display help for command
+
+Commands:
+  add-badge [options] <iconPath>  add badge to icon using add-badge by default
+  use-config <configPath>         use json file as a config
+  help [command]                  display help for command
+```
+- **add-badge command**
+```
+Usage: app-icon-badge add-badge [options] <iconPath>
+
+add badge to the icon runs by default you don't need to specify this command
+
+Arguments:
+  iconPath                       required argument, icon path
+
+Options:
+  -t, --type <type>              required option (choices: "banner", "ribbon")
+  -x, --text <text>              required option you need to provide text value
+  -p, --position <position>      badge position banner:top,bottom and  ribbon:left,right (choices: "top", "left", "right", "bottom")
+  -b, --background <background>  badge background color
+  -c, --color <color>            badge color (choices: "white", "black", default: "white")
+```
+#### example
+```
+npx app-icon-badge ./example/icon.png --type=banner --text=hello --position=top --background=#45f4ee --color=black
+```
 ## 🚧 RoadMap
 
 The library is still in its early stages. We have a lot of ideas to improve it and make it more useful. Here are some of the things we have already had the chance to implement, as well as our plans for additions in the future:
@@ -147,7 +183,7 @@ The library is still in its early stages. We have a lot of ideas to improve it a
 - [x] Add support for Android Adaptive Icons
 - [ ] Add Tests
 - [x] Add support for custom badge colors
-- [ ] Add the ability to run as a CLI tool
+- [ ] Add the ability to run as a CLI tool (WIP)
 
 Feel free to suggest any other features or contribute to the project yourself by helping us implement upcoming features.
 

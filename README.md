@@ -171,7 +171,7 @@ Options:
 ```
 #### example
 ```
-app-icon-badge ./example/icon.png --type=banner --text=hello --position=top --background=#45f4ee --color=black
+npx app-icon-badge ./example/icon.png --type=banner --text=hello --position=top --background=#45f4ee --color=black
 ```
 ## 🚧 RoadMap
 

@@ -17,7 +17,7 @@ program
   .addCommand(
     new Command('add-badge')
       .description(
-        "add badge to the icon runs by default you don' need to specify this command "
+        "add badge to the icon runs by default you don't need to specify this command "
       )
       .argument('<iconPath>', 'required argument, icon path')
       .addOption(

@@ -137,7 +137,8 @@ addBadge({
   - `color` - the color of the text only `black` and `white` color are supported (default is `white`).
   - `background` - the background color of the badge, only hex format is supported (default is `#000000`).
 
-## as a CLi
+## You can also use it as a CLI tool by running: `npx app-icon-badge ......`
+
 ```
 Usage: app-icon-badge [options] [command]
 
@@ -156,7 +157,7 @@ Commands:
 ```
 Usage: app-icon-badge add-badge [options] <iconPath>
 
-add badge to the icon runs by default you don' need to specify this command
+add badge to the icon runs by default you don't need to specify this command
 
 Arguments:
   iconPath                       required argument, icon path

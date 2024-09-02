@@ -4,6 +4,7 @@ import { Badge } from './types';
 const DST_APP_ICON_BADGE_FOLDER = '.expo/app-icon-badge';
 const DST_ICON = `${DST_APP_ICON_BADGE_FOLDER}/icon.png`;
 const DST_ADAPTIVE_APP_ICON = `${DST_APP_ICON_BADGE_FOLDER}/foregroundImage.png`;
+const DST_IOS_APP_ICON = `${DST_APP_ICON_BADGE_FOLDER}/ios-icon.png`;
 
 type Params = {
   badges: Array<Badge>;
@@ -15,6 +16,7 @@ function withIconBadge(config: any, { badges, enabled = true }: Params) {
   // get source paths from config
   const iconPath = config?.icon;
   const adaptiveIconPath = config?.android?.adaptiveIcon?.foregroundImage;
+  const iOSIconPath = config?.ios?.icon;
   // TODO: add more checks for the config object
 
   // Generate icon with badge
@@ -38,6 +40,16 @@ function withIconBadge(config: any, { badges, enabled = true }: Params) {
       badges,
     }).catch(() => {});
     config.android.adaptiveIcon.foregroundImage = DST_ADAPTIVE_APP_ICON;
+  }
+
+  if (iOSIconPath) {
+    addBadge({
+      isAdaptiveIcon: false,
+      icon: iOSIconPath,
+      dstPath: DST_IOS_APP_ICON,
+      badges,
+    }).catch(() => {});
+    config.ios.icon = DST_IOS_APP_ICON;
   }
 
   return config;

@@ -34,6 +34,7 @@
   },
   "homepage": "https://github.com/obytes/app-icon-badge#readme",
   "dependencies": {
+    "@expo/config-plugins": "^8.0.8",
     "color-convert": "^2.0.1",
     "commander": "^11.0.0",
     "delta-e": "^0.0.8",

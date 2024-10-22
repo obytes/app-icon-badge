@@ -18,7 +18,7 @@
     "start-cli": "nodemon --exec ts-node --files cli/cli.ts",
     "type-check": "tsc --noEmit",
     "format": "prettier --write \"**/*.{ts,md,json}\" --ignore-path .gitignore",
-    "np": "pnpm build && np --no-cleanup --no-release-draft",
+    "np": "pnpm build && np --no-cleanup --no-release-draft --any-branch",
     "test": "echo \"no test specified\"",
     "prepare": "husky install"
   },

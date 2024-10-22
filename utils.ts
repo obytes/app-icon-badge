@@ -23,5 +23,5 @@ export const getFont = (isAdaptiveIcon: Boolean, isFontBlack: Boolean) =>
       ? FONT_SANS_64_BLACK
       : FONT_SANS_64_WHITE
     : isFontBlack
-    ? FONT_SANS_128_BLACK
-    : FONT_SANS_128_WHITE;
+      ? FONT_SANS_128_BLACK
+      : FONT_SANS_128_WHITE;

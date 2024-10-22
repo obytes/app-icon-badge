@@ -9,7 +9,8 @@
     "dist",
     "README.md",
     "assets",
-    "app.plugin.js"
+    "app.plugin.js",
+    "types.ts"
   ],
   "scripts": {
     "build": "tsup index.ts  --format cjs,esm --dts && cp -r assets dist && tsup app.plugin.ts --format cjs && tsup cli/cli.ts",

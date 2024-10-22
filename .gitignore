@@ -3,3 +3,5 @@ assets/*.*.png
 example/*.*.png
 dist
 .DS_Store
+ios/
+android/

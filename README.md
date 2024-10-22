@@ -153,7 +153,9 @@ Commands:
   use-config <configPath>         use json file as a config
   help [command]                  display help for command
 ```
+
 - **add-badge command**
+
 ```
 Usage: app-icon-badge add-badge [options] <iconPath>
 
@@ -169,10 +171,13 @@ Options:
   -b, --background <background>  badge background color
   -c, --color <color>            badge color (choices: "white", "black", default: "white")
 ```
+
 #### example
+
 ```
 npx app-icon-badge ./example/icon.png --type=banner --text=hello --position=top --background=#45f4ee --color=black
 ```
+
 ## 🚧 RoadMap
 
 The library is still in its early stages. We have a lot of ideas to improve it and make it more useful. Here are some of the things we have already had the chance to implement, as well as our plans for additions in the future:

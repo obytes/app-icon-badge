@@ -12,17 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name : 📦 Checkout project repo
-        uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'pnpm'
-
-
-      - name: 📦 Install Project Dependencies
-        run: pnpm install --frozen-lockfile
+        uses: actions/checkout@v4
+      - name : 📦 Setup Node + PNPM + install deps
+        uses: ./.github/actions/setup-node-pnpm-install
       - name: 🏃‍♂️ Run TypeScript
         run : pnpm run type-check

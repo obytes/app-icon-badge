@@ -1,10 +1,10 @@
-import { addBadge } from './index';
-import { AppIconBadgeOptions, Badge } from './types';
-import {
-  withDangerousMod,
+import { addBadge } from '../index';
+import type { AppIconBadgeConfig, Badge } from '../../types';
+import type {
   ConfigPlugin,
   ExportedConfigWithProps,
 } from '@expo/config-plugins';
+import { withDangerousMod } from '@expo/config-plugins';
 
 const DST_APP_ICON_BADGE_FOLDER = '.expo/app-icon-badge';
 const DST_ICON = `${DST_APP_ICON_BADGE_FOLDER}/icon.png`;
@@ -30,74 +30,6 @@ const addBadgeWithErrorsHandling = async (
   } catch (error) {
     return { error: 'An unknown error occurred', status: 'error' };
   }
-};
-
-/**
- * In case the user has provided an icon, in the global config, we need to generate the icon with the badge and update the config
- * @param config - Expo config
- * @param options - Options for the plugin
- * @returns The updated config
- */
-
-const withIcon: ConfigPlugin<AppIconBadgeOptions> = (config, options) => {
-  const iconPath = config?.icon;
-  if (iconPath) {
-    addBadge({
-      icon: iconPath,
-      dstPath: DST_ICON,
-      badges: options.badges,
-    }).catch(() => {});
-    config.icon = DST_ICON;
-  }
-  return config;
-};
-
-/**
- * For iOS and icon inside ios config
- * @param config - Expo config
- * @param options - Options for the plugin
- * @returns The updated config
- */
-const withIconBadgeAndroid: ConfigPlugin<AppIconBadgeOptions> = (
-  config,
-  options
-) => {
-  const adaptiveIconPath = config?.android?.adaptiveIcon?.foregroundImage;
-  if (adaptiveIconPath) {
-    addBadge({
-      icon: adaptiveIconPath,
-      dstPath: DST_ADAPTIVE_APP_ICON,
-      badges: options.badges,
-    }).catch(() => {});
-    config.android!.adaptiveIcon!.foregroundImage = DST_ADAPTIVE_APP_ICON;
-  }
-
-  return config;
-};
-
-/**
- * For iOS and icon inside ios config
- * @param config - Expo config
- * @param options - Options for the plugin
- * @returns The updated config
- */
-
-const withIconBadgeIOS: ConfigPlugin<AppIconBadgeOptions> = (
-  config,
-  options
-) => {
-  const iconPath = config?.ios?.icon;
-
-  if (iconPath) {
-    addBadge({
-      icon: iconPath,
-      dstPath: DST_ICON,
-      badges: options.badges,
-    }).catch(() => {});
-
-    config!.ios!.icon = DST_ICON;
-  }
-  return config;
 };
 
 /**
@@ -132,7 +64,7 @@ async function withIconAsync(
  * @returns The updated config
  */
 
-const withIconBadgeiOSAsync: ConfigPlugin<AppIconBadgeOptions> = (
+const withIconBadgeiOSAsync: ConfigPlugin<AppIconBadgeConfig> = (
   config,
   options
 ) => {
@@ -167,7 +99,7 @@ const withIconBadgeiOSAsync: ConfigPlugin<AppIconBadgeOptions> = (
  * @returns The updated config
  */
 
-const withIconBadgeAndroidAsync: ConfigPlugin<AppIconBadgeOptions> = (
+const withIconBadgeAndroidAsync: ConfigPlugin<AppIconBadgeConfig> = (
   config,
   options
 ) => {
@@ -205,14 +137,14 @@ const withIconBadgeAndroidAsync: ConfigPlugin<AppIconBadgeOptions> = (
  * @returns The updated config
  */
 
-const withIconBadge: ConfigPlugin<AppIconBadgeOptions> = (config, options) => {
+export const withIconBadgeAsync: ConfigPlugin<AppIconBadgeConfig> = (
+  config,
+  options
+) => {
   const { badges = [], enabled = true } = options;
   if (!enabled) return config;
-  config = withIcon(config, options);
-  config = withIconBadgeAndroid(config, { badges });
-  config = withIconBadgeIOS(config, { badges });
+  config = withIconBadgeAndroidAsync(config, { badges });
+  config = withIconBadgeiOSAsync(config, { badges });
 
   return config;
 };
-
-module.exports = withIconBadge;

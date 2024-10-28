@@ -1,6 +1,6 @@
 import Jimp from 'jimp';
 import path from 'path';
-import { Ribbon } from './types';
+import { Ribbon } from '../types';
 import { loadOverlay } from './load-overlay';
 import { getFont } from './utils';
 

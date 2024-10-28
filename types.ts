@@ -23,7 +23,7 @@ export type Params = {
   isAdaptiveIcon?: boolean;
 };
 
-export type AppIconBadgeOptions = {
+export type AppIconBadgeConfig = {
   badges: Array<Badge>;
   enabled?: boolean;
 };

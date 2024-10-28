@@ -2,7 +2,7 @@ import Jimp from 'jimp';
 import { createBannerBadge } from './create-banner-badge';
 import { createRibbonBadge } from './create-ribbon-badge';
 import { getResultPath } from './get-result-path';
-import { Params } from './types';
+import { Params } from '../types';
 
 export async function addBadge({
   icon,

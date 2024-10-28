@@ -13,7 +13,7 @@
     "types.ts"
   ],
   "scripts": {
-    "build": "tsup index.ts  --format cjs,esm --dts && cp -r assets dist && tsup app.plugin.ts --format cjs && tsup cli/cli.ts",
+    "build": "tsup src/index.ts  --format cjs,esm --dts && cp -r src/assets dist && tsup src/plugin/app.plugin.ts --format cjs && tsup cli/cli.ts",
     "start": "nodemon --exec ts-node --files example/index.ts",
     "start-cli": "nodemon --exec ts-node --files cli/cli.ts",
     "type-check": "tsc --noEmit",

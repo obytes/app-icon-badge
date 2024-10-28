@@ -1,6 +1,6 @@
 import Jimp from 'jimp';
 import path from 'path';
-import { Banner } from './types';
+import { Banner } from '../types';
 import { loadOverlay } from './load-overlay';
 import { getFont } from './utils';
 

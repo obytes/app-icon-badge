@@ -1,4 +1,4 @@
-import { addBadge } from '../index';
+import { addBadge } from '../src/index';
 import path from 'path';
 
 const icon = path.resolve(__dirname, './icon.png');

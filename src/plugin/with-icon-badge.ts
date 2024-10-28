@@ -42,6 +42,7 @@ const withIconBadgeAndroid: ConfigPlugin<AppIconBadgeConfig> = (
       icon: adaptiveIconPath,
       dstPath: DST_ADAPTIVE_APP_ICON,
       badges: options.badges,
+      isAdaptiveIcon: true,
     }).catch(() => {});
     config.android!.adaptiveIcon!.foregroundImage = DST_ADAPTIVE_APP_ICON;
   }

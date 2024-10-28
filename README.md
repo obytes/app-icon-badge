@@ -8,6 +8,19 @@ App Icon Badge
 ✨ Easily generate icons with environment and version badges for your Mobile application. ✨
 </p>
 
+<p align="center">
+  <a href="https://www.npmjs.com/package/app-icon-badge"><img src="https://img.shields.io/npm/v/app-icon-badge.svg?style=flat-square" alt="version"></a>
+  <a href="http://www.npmtrends.com/app-icon-badge"><img src="https://img.shields.io/npm/dt/app-icon-badge.svg?style=flat-square" alt="downloads"></a>
+  <a href="https://github.com/yjose/app-icon-badge/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/app-icon-badge.svg?style=flat-square" alt="license"></a>
+  <a href="#contributors"><img src="https://img.shields.io/badge/all_contributors-16-orange.svg?style=flat-square" alt="All Contributors"></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/obytes/app-icon-badge/watchers"><img src="https://img.shields.io/github/watchers/obytes/app-icon-badge.svg?style=social" alt="Watch on GitHub"></a>
+  <a href="https://github.com/obytes/app-icon-badge/stargazers"><img src="https://img.shields.io/github/stars/obytes/app-icon-badge.svg?style=social" alt="Star on GitHub"></a>
+  <a href="https://twitter.com/intent/tweet?text=Check%20out%20app-icon-badge%20by%20%40Obytes%20https%3A%2F%2Fgithub.com%2Fobytes%2Fapp-icon-badge%20%F0%9F%91%8D"><img src="https://img.shields.io/twitter/url/https/github.com/obytes/app-icon-badge.svg?style=social" alt="Tweet"></a>
+</p>
+
 <hr/>
 
 ## 🚀 Motivation
@@ -46,12 +59,31 @@ As we mentioned above, we built the package to be used in Expo projects and gene
 
 To use the plugin, you need to add it to your `app.config.js` file.
 
-```javascript
-// app.config.js
-const environment = 'staging'; // development, staging, production
+```typescript
+// app.config.ts
+import type { ConfigContext, ExpoConfig } from '@expo/config';
+import type { AppIconBadgeConfig } from 'app-icon-badge/types';
 
-export default ({ config }) => ({
-  // your config here ...
+const VERSION = '1.0.1';
+const APP_ENV = 'QA';
+
+const appIconBadgeConfig: AppIconBadgeConfig = {
+  enabled: true, // enable/ disable the plugin based on the environment (usually disabled for production builds)
+  badges: [
+    {
+      text: APP_ENV, // banner text
+      type: 'banner', // banner or ribbon
+      color: 'white', // by default it will be white and the only color supported for now is white and black
+      background: '#FF0000', // by default it will be black and we are only supporting hex format for colors
+    },
+    {
+      text: VERSION,
+      type: 'ribbon',
+    },
+  ],
+};
+
+export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: 'my-app',
   icon: './assets/icon.png',
@@ -61,26 +93,7 @@ export default ({ config }) => ({
       backgroundColor: '#FFFFFF',
     },
   },
-  plugins: [
-    [
-      'app-icon-badge',
-      {
-        enabled: true, // enable/ disable the plugin based on the environment (usually disabled for production builds)
-        badges: [
-          {
-            text: environment, // banner text
-            type: 'banner', // banner or ribbon
-            color: 'white', // by default it will be white and the only color supported for now is white and black
-            background: '#FF0000', // by default it will be black and we are only supporting hex format for colors
-          },
-          {
-            text: 'V1.0.1',
-            type: 'ribbon',
-          },
-        ],
-      },
-    ],
-  ],
+  plugins: [['app-icon-badge', appIconBadgeConfig]],
 });
 ```
 
@@ -110,7 +123,7 @@ const icon = path.resolve(__dirname, './assets/icon.png');
 
 addBadge({
   icon,
-  dstPath: './assets/icon.${environment}.png', // optional, if not provided the icon will be generated in the same directory as the original icon under  the name 'icon.result.png'
+  dstPath: './assets/icon.environment.png', // optional, if not provided the icon will be generated in the same directory as the original icon under  the name 'icon.result.png'
   badges: [
     {
       text: 'staging',

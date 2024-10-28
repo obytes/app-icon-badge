@@ -1,6 +1,6 @@
 import { parseBadgeJsonConfigFile } from './parse-badge-json-config-file';
 import { IconConfig } from './icon-config';
-import { addBadge } from '..';
+import { addBadge } from '../src/index';
 import { Badge } from '../types';
 import { Command, Option } from 'commander';
 

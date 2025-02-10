@@ -1,4 +1,5 @@
-import Jimp from 'jimp';
+import { Jimp} from "jimp";
+import type { JimpInstance,  } from "jimp";
 import convert from 'color-convert';
 import deltaE from 'delta-e';
 
@@ -8,9 +9,10 @@ type Params = {
 };
 
 const HEX_COLOR_REGEX = /^#[0-9a-fA-F]{6}$/;
-
-export async function loadOverlay({ path, background }: Params): Promise<Jimp> {
+type ReadResult = Awaited<ReturnType<typeof Jimp.read>>;
+export async function loadOverlay({ path, background }: Params) {
   const bannerOverlay = await Jimp.read(path);
+  console.log(bannerOverlay);
 
   if (background !== undefined && !HEX_COLOR_REGEX.test(background)) {
     console.warn(
@@ -31,7 +33,7 @@ export async function loadOverlay({ path, background }: Params): Promise<Jimp> {
 }
 
 type ParamsRC = {
-  image: Jimp;
+  image: ReadResult; 
   from: string;
   to: string;
 };

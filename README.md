@@ -57,6 +57,10 @@ pnpm add app-icon-badge
 
 As we mentioned above, we built the package to be used in Expo projects and generate icons that will be provided to the `icon` and `android.adaptiveIcon.foregroundImage` properties in `app.json`. So, we recommend following the [official Expo documentation](https://docs.expo.dev/develop/user-interface/app-icons) to generate the icons.
 
+> ⚠️ **Icon Size Warning**  
+> Make sure your source app-icon is exactly **1024×1024 pixels**.  
+> Icons of any other size may cause badge rendering errors.
+
 To use the plugin, you need to add it to your `app.config.js` file.
 
 ```typescript

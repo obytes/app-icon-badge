@@ -48,7 +48,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     output: 'static',
     favicon: './assets/images/favicon.png',
   },
-  plugins: ['expo-router', ['app-icon-badge', appIconBadgeConfig]],
+  plugins: ['expo-router', 'expo-font', ['app-icon-badge', appIconBadgeConfig]],
   experiments: {
     typedRoutes: true,
   },

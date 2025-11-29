@@ -1,4 +1,4 @@
-import Jimp from 'jimp';
+import { Jimp } from "jimp";
 import { createBannerBadge } from './create-banner-badge';
 import { createRibbonBadge } from './create-ribbon-badge';
 import { getResultPath } from './get-result-path';
@@ -29,6 +29,6 @@ export async function addBadge({
     : getResultPath({
         icon: icon,
       });
-  resultImage.writeAsync(resultFilename);
+  resultImage.write(resultFilename as `${string}.${string}`);
   return resultFilename;
 }

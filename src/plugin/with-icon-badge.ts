@@ -1,4 +1,3 @@
-import { addBadge } from '../index';
 import type { AppIconBadgeConfig } from '../../types';
 import type { ConfigPlugin } from '@expo/config-plugins';
 
@@ -16,11 +15,6 @@ const DST_ADAPTIVE_APP_ICON = `${DST_APP_ICON_BADGE_FOLDER}/foregroundImage.png`
 const withIcon: ConfigPlugin<AppIconBadgeConfig> = (config, options) => {
   const iconPath = config?.icon;
   if (iconPath) {
-    addBadge({
-      icon: iconPath,
-      dstPath: DST_ICON,
-      badges: options.badges,
-    }).catch(() => {});
     config.icon = DST_ICON;
   }
   return config;
@@ -38,15 +32,8 @@ const withIconBadgeAndroid: ConfigPlugin<AppIconBadgeConfig> = (
 ) => {
   const adaptiveIconPath = config?.android?.adaptiveIcon?.foregroundImage;
   if (adaptiveIconPath) {
-    addBadge({
-      icon: adaptiveIconPath,
-      dstPath: DST_ADAPTIVE_APP_ICON,
-      badges: options.badges,
-      isAdaptiveIcon: true,
-    }).catch(() => {});
     config.android!.adaptiveIcon!.foregroundImage = DST_ADAPTIVE_APP_ICON;
   }
-
   return config;
 };
 
@@ -62,14 +49,7 @@ const withIconBadgeIOS: ConfigPlugin<AppIconBadgeConfig> = (
   options
 ) => {
   const iconPath = config?.ios?.icon;
-
   if (iconPath) {
-    addBadge({
-      icon: iconPath,
-      dstPath: DST_ICON,
-      badges: options.badges,
-    }).catch(() => {});
-
     config!.ios!.icon = DST_ICON;
   }
   return config;
@@ -89,6 +69,58 @@ export const withIconBadge: ConfigPlugin<AppIconBadgeConfig> = (
 ) => {
   const { badges = [], enabled = true } = options;
   if (!enabled) return config;
+  
+  // Store original icon paths before modifying config
+  const originalIconPath = config?.icon;
+  const originalAdaptiveIconPath = config?.android?.adaptiveIcon?.foregroundImage;
+  const originalIOSIconPath = config?.ios?.icon;
+
+  // Generate badge files synchronously BEFORE Expo's icon processing
+  try {
+    const fs = require('fs');
+    const path = require('path');
+    
+    // Ensure directory exists
+    const iconDir = path.dirname(DST_ICON);
+    if (!fs.existsSync(iconDir)) {
+      fs.mkdirSync(iconDir, { recursive: true });
+    }
+    
+    // Import the sync function and create badges immediately
+    const { addBadgeSync } = require('../add-badge-sync');
+    
+    if (originalIconPath) {
+      addBadgeSync({
+        icon: originalIconPath,
+        dstPath: DST_ICON,
+        badges: options.badges,
+      });
+    } else if (originalIOSIconPath) {
+      addBadgeSync({
+        icon: originalIOSIconPath,
+        dstPath: DST_ICON,
+        badges: options.badges,
+      });
+    }
+    
+    if (originalAdaptiveIconPath) {
+      const adaptiveDir = path.dirname(DST_ADAPTIVE_APP_ICON);
+      if (!fs.existsSync(adaptiveDir)) {
+        fs.mkdirSync(adaptiveDir, { recursive: true });
+      }
+      
+      addBadgeSync({
+        icon: originalAdaptiveIconPath,
+        dstPath: DST_ADAPTIVE_APP_ICON,
+        badges: options.badges,
+        isAdaptiveIcon: true,
+      });
+    }
+  } catch (error) {
+    console.warn('Badge generation failed, using original icons:', error);
+  }
+
+  // Update config paths to point to badged files
   config = withIcon(config, options);
   config = withIconBadgeAndroid(config, { badges });
   config = withIconBadgeIOS(config, { badges });

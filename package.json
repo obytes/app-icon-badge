@@ -39,7 +39,7 @@
     "color-convert": "^2.0.1",
     "commander": "^11.0.0",
     "delta-e": "^0.0.8",
-    "jimp": "^0.22.7"
+    "jimp": "^1.6.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",

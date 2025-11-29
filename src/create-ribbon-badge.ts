@@ -1,4 +1,5 @@
-import Jimp from 'jimp';
+import { Jimp, loadFont, HorizontalAlign, VerticalAlign} from "jimp";
+import type { JimpInstance } from "jimp";
 import path from 'path';
 import { Ribbon } from '../types';
 import { loadOverlay } from './load-overlay';
@@ -10,7 +11,7 @@ const RIBBON_ROTATION_LEFT = 45;
 export async function createRibbonBadge(
   { position = 'right', text, color = 'white', background }: Ribbon,
   isAdaptiveIcon: Boolean = false
-): Promise<Jimp | null> {
+): Promise<JimpInstance | null> {
   const IS_FONT_BLACK = color === 'black';
   const IS_POSITION_LEFT = position === 'left';
   const RIBBON_HEIGHT = isAdaptiveIcon ? 100 : 180; // magic number from banners overlay images
@@ -19,7 +20,7 @@ export async function createRibbonBadge(
     ? 'assets/ribbon-overlay-adaptive.png'
     : 'assets/ribbon-overlay.png';
 
-  const font = await Jimp.loadFont(getFont(isAdaptiveIcon, IS_FONT_BLACK));
+  const font = await loadFont(getFont(isAdaptiveIcon, IS_FONT_BLACK));
 
   const ribbonOverlay = await loadOverlay({
     path: path.resolve(__dirname, OVERLAY_PATH),
@@ -28,23 +29,23 @@ export async function createRibbonBadge(
   const RIBBON_OVERLAY_WIDTH = ribbonOverlay.bitmap.width;
 
   // we need a helper image as container for the text as we are going to rotate it later
-  const textContainer = new Jimp(
-    RIBBON_OVERLAY_WIDTH,
-    RIBBON_HEIGHT,
-    'transparent'
-  );
+  const textContainer = new Jimp({
+    width: RIBBON_OVERLAY_WIDTH,
+    height: RIBBON_HEIGHT,
+    color: 0x00000000,
+  });
   textContainer.print(
-    font,
-    0,
-    0,
-    {
-      text: text,
-      color: 'red',
-      alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
-      alignmentY: Jimp.VERTICAL_ALIGN_MIDDLE,
+    {font,
+      text: {text,
+        alignmentX: HorizontalAlign.CENTER,
+      alignmentY: VerticalAlign.MIDDLE,
+      },
+      x: 0,
+      y: 0,
+
+      maxWidth: RIBBON_OVERLAY_WIDTH,
+      maxHeight: RIBBON_HEIGHT,
     },
-    RIBBON_OVERLAY_WIDTH,
-    RIBBON_HEIGHT
   );
   textContainer.rotate(
     IS_POSITION_LEFT ? RIBBON_ROTATION_LEFT : RIBBON_ROTATION_RIGHT
@@ -59,7 +60,7 @@ export async function createRibbonBadge(
 
   // compose the text container image with the ribbon overlay image
   const ribbonBadge = ribbonOverlay
-    .flip(FLIP_HORIZONTAL, false)
+    .flip({horizontal: FLIP_HORIZONTAL, vertical: false})
     .composite(textContainer, TEXT_CONTAINER_X, TEXT_CONTAINER_Y);
   return ribbonBadge;
 }

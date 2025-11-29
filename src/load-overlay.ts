@@ -1,4 +1,5 @@
-import Jimp from 'jimp';
+import { Jimp} from "jimp";
+import type { JimpInstance,  } from "jimp";
 import convert from 'color-convert';
 import deltaE from 'delta-e';
 
@@ -8,35 +9,34 @@ type Params = {
 };
 
 const HEX_COLOR_REGEX = /^#[0-9a-fA-F]{6}$/;
-
-export async function loadOverlay({ path, background }: Params): Promise<Jimp> {
+export async function loadOverlay({ path, background }: Params): Promise<JimpInstance> {
   const bannerOverlay = await Jimp.read(path);
 
   if (background !== undefined && !HEX_COLOR_REGEX.test(background)) {
     console.warn(
       `Invalid background color: ${background} - must be a hex color, #000000 has been used as default value`
     );
-    return bannerOverlay;
+    return bannerOverlay as JimpInstance;
   }
 
   if (background !== undefined && HEX_COLOR_REGEX.test(background)) {
     return replaceColor({
-      image: bannerOverlay,
+      image: bannerOverlay as JimpInstance,
       from: '#000000',
       to: background,
     });
   }
 
-  return bannerOverlay;
+  return bannerOverlay as JimpInstance;
 }
 
 type ParamsRC = {
-  image: Jimp;
+  image: JimpInstance; 
   from: string;
   to: string;
 };
 
-const replaceColor = ({ image, from, to }: ParamsRC) => {
+const replaceColor = ({ image, from, to }: ParamsRC): JimpInstance => {
   const fromColor = convert.hex.lab(from); // [R, G, B]
   const toColor = convert.hex.rgb(to); // [R, G, B]
 
